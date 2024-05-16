@@ -10,6 +10,6 @@ public record DatosResultados(
         @JsonAlias("count") Double cantidad,
         @JsonAlias("next") String proximo,
         @JsonAlias("previous") String anterior,
-        @JsonAlias("results") String resultados
+        @JsonAlias("results") List<Libro> resultados
 ) {
 }

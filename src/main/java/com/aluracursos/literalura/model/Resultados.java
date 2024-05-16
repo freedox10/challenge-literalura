@@ -7,7 +7,7 @@ public class Resultados {
     private Double cantidad;
     private String proximo;
     private String anterior;
-    private String resultados;
+    private List<Libro> resultados;
 
     public Resultados(DatosResultados datosResultados) {
         this.cantidad = datosResultados.cantidad();
@@ -40,11 +40,11 @@ public class Resultados {
         this.anterior = anterior;
     }
 
-    public String getResultados() {
+    public List<Libro> getResultados() {
         return resultados;
     }
 
-    public void setResultados(String resultados) {
+    public void setResultados(List<Libro> resultados) {
         this.resultados = resultados;
     }
 }

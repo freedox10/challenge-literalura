@@ -59,7 +59,7 @@ public class Principal {
     private DatosResultados getDatosResultados(){
         System.out.println("Escribe el título y/o autor del libro: ");
         var busqueda = teclado.nextLine();
-        //System.out.println(busqueda);
+        System.out.println(busqueda);
         var json = consumoApi.obtenerDatos(URL_BASE + "/?search=" +
                 busqueda.replace(" ","%20"));
         System.out.println("RESULTADO: " + json);
