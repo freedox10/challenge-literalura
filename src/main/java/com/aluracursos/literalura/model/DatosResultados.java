@@ -7,9 +7,9 @@ import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record DatosResultados(
-        @JsonAlias("count") Double cantidad,
+        @JsonAlias("count") Integer cantidad,
         @JsonAlias("next") String proximo,
-        @JsonAlias("previous") String anterior,
-        @JsonAlias("results") List<Libro> resultados
+        @JsonAlias("previous") String anterior//,
+        //@JsonAlias("results") List<Libro> resultados
 ) {
 }
