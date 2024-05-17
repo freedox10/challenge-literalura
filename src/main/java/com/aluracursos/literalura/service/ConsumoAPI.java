@@ -7,7 +7,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 public class ConsumoAPI {
-    public String obtenerDatos(String url){
+    public String obtenerDatosAPI(String url){
         //System.out.println("Llamado: " + url);
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
@@ -17,12 +17,13 @@ public class ConsumoAPI {
         try {
             response = client
                     .send(request, HttpResponse.BodyHandlers.ofString());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e)  {
             throw new RuntimeException(e);
         }
         String json = response.body();
+        if (json == null || json.isEmpty()){
+            throw new IllegalArgumentException("Respuesta API nula o vacía");
+        }
         //System.out.println("Body Json: " +json);
         return json;
     }

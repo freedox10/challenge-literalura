@@ -58,24 +58,26 @@ public class Principal {
     }
 
     private DatosResultados getDatosResultados(){
+        String nodo = "";
         System.out.println("Escribe el título y/o autor del libro: ");
         var busqueda = teclado.nextLine();
-        System.out.println(busqueda);
-        var json = consumoApi.obtenerDatos(URL_BASE + "/?search=" +
+        //System.out.println(busqueda);
+        var json = consumoApi.obtenerDatosAPI(URL_BASE + "/?search=" +
                 busqueda.replace(" ","%20"));
         System.out.println("RESULTADO: " + json);
         ConvierteDatos conversor = new ConvierteDatos();
-        DatosResultados datos = conversor.obtenerDatos(json, DatosResultados.class);
+        DatosResultados datos = conversor.obtenerDatos(json, nodo, DatosResultados.class);
         System.out.println(datos);
         return datos;
     }
 
     private Resultados get32ResultadosMas(String urlProx){
+        String nodo = "";
         System.out.println("urlProx en 32Mas: " + urlProx);
-        var jsonProx = consumoApi.obtenerDatos(urlProx);
+        var jsonProx = consumoApi.obtenerDatosAPI(urlProx);
         System.out.println("jsonProx en 32Mas: " + jsonProx);
         ConvierteDatos conversor = new ConvierteDatos();
-        DatosResultados datosProx = conversor.obtenerDatos(jsonProx, DatosResultados.class);
+        DatosResultados datosProx = conversor.obtenerDatos(jsonProx, nodo, DatosResultados.class);
         System.out.println("datosProx en 32Mas: " + datosProx);
         Resultados resultadoProx = new Resultados(datosProx);
         System.out.println("resultadoProx en 32Mas: " + resultadoProx);
@@ -83,11 +85,12 @@ public class Principal {
     }
 
     private Resultados get32ResultadosMenos(String urlAnt){
+        String nodo = "";
         System.out.println("urlAnt en 32Mas: " + urlAnt);
-        var jsonAnt = consumoApi.obtenerDatos(urlAnt);
+        var jsonAnt = consumoApi.obtenerDatosAPI(urlAnt);
         System.out.println("jsonAnt en 32Mas: " + jsonAnt);
         ConvierteDatos conversor = new ConvierteDatos();
-        DatosResultados datosAnt = conversor.obtenerDatos(jsonAnt, DatosResultados.class);
+        DatosResultados datosAnt = conversor.obtenerDatos(jsonAnt, nodo, DatosResultados.class);
         System.out.println("datosAnt en 32Mas: " + datosAnt);
         Resultados resultadoAnt = new Resultados(datosAnt);
         System.out.println("resultadoAnt en 32Mas: " + resultadoAnt);
