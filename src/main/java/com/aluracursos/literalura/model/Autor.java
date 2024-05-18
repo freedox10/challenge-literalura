@@ -1,10 +1,23 @@
 package com.aluracursos.literalura.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Autor {
 
+    @JsonProperty("name")
     private String nombre;
-    private String añoNacimiento;
-    private String añoMuerte;
+    @JsonProperty("birth_year")
+    private String anoNacimiento;
+    @JsonProperty("death_year")
+    private String anoMuerte;
+
+    public Autor(){}
+
+    public Autor(String nombre, String anoNacimiento, String anoMuerte) {
+        this.nombre = nombre;
+        this.anoNacimiento = anoNacimiento;
+        this.anoMuerte = anoMuerte;
+    }
 
     public String getNombre() {
         return nombre;
@@ -14,19 +27,28 @@ public class Autor {
         this.nombre = nombre;
     }
 
-    public String getAñoNacimiento() {
-        return añoNacimiento;
+    public String getAnoNacimiento() {
+        return anoNacimiento;
     }
 
-    public void setAñoNacimiento(String añoNacimiento) {
-        this.añoNacimiento = añoNacimiento;
+    public void setAnoNacimiento(String anoNacimiento) {
+        this.anoNacimiento = anoNacimiento;
     }
 
-    public String getAñoMuerte() {
-        return añoMuerte;
+    public String getAnoMuerte() {
+        return anoMuerte;
     }
 
-    public void setAñoMuerte(String añoMuerte) {
-        this.añoMuerte = añoMuerte;
+    public void setAnoMuerte(String anoMuerte) {
+        this.anoMuerte = anoMuerte;
+    }
+
+    @Override
+    public String toString() {
+        return "Autor{" +
+                "nombre='" + nombre + '\'' +
+                ", anoNacimiento='" + anoNacimiento + '\'' +
+                ", anoMuerte='" + anoMuerte + '\'' +
+                '}';
     }
 }
