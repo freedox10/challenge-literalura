@@ -11,6 +11,10 @@ public class Resultados {
     private String anterior;
     //private List<Libro> resultados;
 
+
+    public Resultados() {
+    }
+
     public Resultados(DatosResultados datosResultados) {
         this.cantidad = datosResultados.cantidad();
         this.proximo = datosResultados.proximo();

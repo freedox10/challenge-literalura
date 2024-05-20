@@ -1,7 +1,5 @@
 package com.aluracursos.literalura.service;
 
-import com.aluracursos.literalura.model.DatosLibro;
-import com.aluracursos.literalura.model.Libro;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,11 +8,11 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
-public class ConvierteDatosSelectivo {
-    private final ObjectMapper objectMapper = new ObjectMapper();
+public class ConvierteDatosSelectivo2 implements IConvierteDatosSelectivo2{
+    private ObjectMapper mapper = new ObjectMapper();
 
-    public List<DatosLibro> obtenerDatosLibros(String json) {
-        ObjectMapper mapper = new ObjectMapper();
+    @Override
+    public <T> List<T> obtenerDatosSelectivo2(String json) {
         try {
             JsonNode rootNode = mapper.readTree(json);
             //System.out.println("Arbol: " + rootNode);
@@ -27,5 +25,6 @@ public class ConvierteDatosSelectivo {
             e.printStackTrace();
             return Collections.emptyList();
         }
+        //return List.of();
     }
 }

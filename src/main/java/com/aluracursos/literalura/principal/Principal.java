@@ -1,30 +1,32 @@
 package com.aluracursos.literalura.principal;
 
-import com.aluracursos.literalura.model.DatosLibro;
-import com.aluracursos.literalura.model.DatosResultados;
-import com.aluracursos.literalura.model.Libro;
-import com.aluracursos.literalura.model.Resultados;
+import com.aluracursos.literalura.model.*;
 import com.aluracursos.literalura.service.ConsumoAPI;
 import com.aluracursos.literalura.service.ConvierteDatos;
 import com.aluracursos.literalura.service.ConvierteDatosSelectivo;
+import com.aluracursos.literalura.service.ConvierteDatosSelectivo2;
 
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
 public class Principal {
-    private Scanner teclado = new Scanner(System.in);
+    private final Scanner teclado = new Scanner(System.in);
     // Instanciar un objeto ConsumoAPI
-    private ConsumoAPI consumoApi = new ConsumoAPI();
-    private final String URL_BASE = "https://gutendex.com/books";
+    private final ConsumoAPI consumoApi = new ConsumoAPI();
+    //private final String URL_BASE = "https://gutendex.com/books";
     // Instanciar un objeto ConvierteDatos
-    private ConvierteDatos conversor = new ConvierteDatos();
-    private ConvierteDatosSelectivo conversorSelectivo = new ConvierteDatosSelectivo();
+    private final ConvierteDatos conversor = new ConvierteDatos();
+    //private ConvierteDatosSelectivo conversorSelectivo = new ConvierteDatosSelectivo();
+    private final ConvierteDatosSelectivo2 conversorSelectivo2 = new ConvierteDatosSelectivo2();
+    private final ContenedorResultados contenedor = new ContenedorResultados();
 
 
     public void muestraElMenu() {
-        var opcion = -1;
-        while (opcion != 0) {
-            var menu = """
+
+            var opcion = -1;
+            while (opcion != 0) {
+                var menu = """
                     1 - Buscar Libro por Título y/o Autor
                     2 - Listar Libros Registrados
                     3 - Listar Autores Registrados
@@ -33,105 +35,106 @@ public class Principal {
 
                     0 - Salir
                     """;
-            System.out.println(menu);
-            opcion = teclado.nextInt();
-            teclado.nextLine();
 
-            switch (opcion) {
-                case 1:
-//                    System.out.println("Escribe el título y/o autor del libro: ");
-//                    var busqueda = teclado.nextLine();
-//                    //System.out.println(busqueda);
-//                    String url1 = URL_BASE + "/?search=" + busqueda.replace(" ","%20");
-                    buscarResultados();
-                    break;
-                case 0:
-                    System.out.println("Cerrando la aplicación...");
-                    break;
-                default:
-                    System.out.println("Opción inválida");
+                System.out.println(menu);
+                opcion = teclado.nextInt();
+                teclado.nextLine();
+
+                switch (opcion) {
+                    case 1:
+                        buscarResultados();
+                        break;
+                    case 0:
+                        var salida = """
+                                   Gracias por utilizar nuestro
+                                           LITERALURA ;)
+                            _by_----- Aplicación Finalizada -----_AAF_
+                            """;
+                        System.out.println(salida);
+                        break;
+                    default:
+                        System.out.println("Opción inválida");
+                }
             }
-        }
+
+//            try{
+//            (InputMismatchException e );
+//            }catch (NumberFormatException e){
+//                System.out.println("_-= No ingresó un monto numérico válido =-_");
+//                //System.out.println(e.getMessage());
+//            }catch (ConnectException |InputMismatchException e){
+//                System.out.println("_-= Error de conexion =-_");
+//            }
+
+//            /* Validar Integer en entrada de teclado */
+//            /*--------------------------------------------------------*/
+//            BufferedReader teclado = new BufferedReader(new InputStreamReader(System.in));
+//
+//            Integer x = -1;/*instancia de Integer a la que asignamos
+//                     el valor 0 para inicializarla.*/
+//            do{
+//                try {
+//                    x = Integer.valueOf(teclado.readLine());
+//                /*si consigue asignar a x el valor leido por
+//                  teclado entonces con break paramos el
+//                  do-while y devolvemos x, sino
+//                  continuamos al catch.*/
+//
+//                    break;
+//
+//                }catch (NumberFormatException | IOException e) {
+//                /*sino lo consigue entra aqui y mostramos el
+//                  mensaje.*/
+//                    System.out.println("debes introducir un
+//                            numero entero");
+//                }
+//            /*como x desde el principio vale 0 es por tanto una
+//              instancia de Integer, entonces repetimos el bucle,
+//              así, hasta que Integer.valueOf() consiga asignar
+//              un valor nuevo a x diferente al inicial que era 0,
+//              entonces con break se saldra del bucle*/
+//
+//            }while(x instanceof Integer);
+//            --------------------------------------------------------
+
 
     }
 
-    private String getDatosJson(String url){
-        //System.out.println("Escribe el título y/o autor del libro: ");
-        //var busqueda = teclado.nextLine();
-        //System.out.println(busqueda);
+    private ContenedorResultados getResultados(String url){
+        //System.out.println("url: " + url);
         var json = consumoApi.obtenerDatosAPI(url);
-        //System.out.println("Salida getDatosJson: " + json);
-        return json;
-    }
+        //System.out.println("json: " + json);
 
-    private Resultados getConvertirResultados(String json){
+        //ConvierteDatos conversor = new ConvierteDatos();
         DatosResultados datos = conversor.obtenerDatos(json, DatosResultados.class);
-        //System.out.println(datos);
+        //System.out.println("datos pagina: " + datos);
         Resultados resultado = new Resultados(datos);
-        //System.out.println("CONVERTIDO: " + resultado);
-        return resultado;
+        //System.out.println("resultado pagina: " + resultado);
+
+        List<Libro> libros = conversorSelectivo2.obtenerDatosSelectivo2(json);
+
+        contenedor.setInicial(resultado);
+        contenedor.setPaginado(libros);
+
+        return contenedor;
+
     }
-
-    private List<DatosLibro> getConvertirSelectivo(String json){
-        List<DatosLibro> datosLibros = conversorSelectivo.obtenerDatosLibros(json);
-        return datosLibros;
-    }
-
-    private Resultados get32ResultadosMenos(String urlAnt){
-        //System.out.println("urlAnt en 32Mas: " + urlAnt);
-        var jsonAnt = consumoApi.obtenerDatosAPI(urlAnt);
-        //System.out.println("jsonAnt en 32Mas: " + jsonAnt);
-
-        //ConvierteDatos conversor = new ConvierteDatos();
-        DatosResultados datosAnt = conversor.obtenerDatos(jsonAnt, DatosResultados.class);
-        //System.out.println("datosAnt en 32Mas: " + datosAnt);
-
-        Resultados resultadoAnt = new Resultados(datosAnt);
-        //System.out.println("resultadoAnt en 32Mas: " + resultadoAnt);
-
-        List<DatosLibro> datosLibros = conversorSelectivo.obtenerDatosLibros(jsonAnt);
-        for(int i = 0; i < datosLibros.size(); i++) {
-            System.out.println(datosLibros.get(i));
-        }
-
-        return resultadoAnt;
-    }
-
-    private Resultados get32ResultadosMas(String urlProx){
-        //System.out.println("urlProx en 32Mas: " + urlProx);
-        var jsonProx = consumoApi.obtenerDatosAPI(urlProx);
-        //System.out.println("jsonProx en 32Mas: " + jsonProx);
-
-        //ConvierteDatos conversor = new ConvierteDatos();
-        DatosResultados datosProx = conversor.obtenerDatos(jsonProx, DatosResultados.class);
-        //System.out.println("datosProx en 32Mas: " + datosProx);
-
-        Resultados resultadoProx = new Resultados(datosProx);
-        //System.out.println("resultadoProx en 32Mas: " + resultadoProx);
-
-        List<DatosLibro> datosLibros = conversorSelectivo.obtenerDatosLibros(jsonProx);
-        for(int i = 0; i < datosLibros.size(); i++) {
-            System.out.println(datosLibros.get(i));
-        }
-
-        return resultadoProx;
-    }
-
 
     private void buscarResultados(){
         System.out.println("Escribe el título y/o autor del libro: ");
         var busqueda = teclado.nextLine();
         //System.out.println(busqueda);
-        String url = URL_BASE + "/?search=" + busqueda.replace(" ","%20");
+        String url = "https://gutendex.com/books/?search=" + busqueda.replace(" ","%20");
 
-        String json = getDatosJson(url);
+        var resultado = getResultados(url).getInicial();
+        var libros = getResultados(url).getPaginado();
 
-        Resultados resultado = getConvertirResultados(json);
-
-        List<DatosLibro> datosLibros = getConvertirSelectivo(json);
-
-        for(int i = 0; i < datosLibros.size(); i++) {
-            System.out.println(datosLibros.get(i));
+        //System.out.println("libros: "+libros);
+//        for (Libro libro : libros) {
+//            System.out.println(libro);
+//        }
+        for(int i = 0; i < libros.size(); i++) {
+            System.out.println(libros.get(i));
         }
         //System.out.println(datosLibros.toString());
 
@@ -168,7 +171,7 @@ public class Principal {
                 default:
                     System.out.println(resultado.getCantidad()
                             + " Libros encontrados, 32 mostrados");
-                    System.out.println("");
+                    System.out.println();
                     System.out.println("--> Escribe el IdGut del libro a registrar");
 
                     if (resultado.getAnterior() != null) {
@@ -190,14 +193,34 @@ public class Principal {
                             System.out.println("_= listando 32 libros menos =_");
                             //System.out.println("urlAnt case 3: " + resultado.getAnterior());
                             String urlAnt = resultado.getAnterior();
-                            resultado = get32ResultadosMenos(urlAnt);
+
+                            resultado = getResultados(urlAnt).getInicial();
+                            libros = getResultados(urlAnt).getPaginado();
+//                            for (Libro libro : libros) {
+//                                System.out.println(libro);
+//                            }
+                            for(int i = 0; i < libros.size(); i++) {
+                                System.out.println(libros.get(i));
+                            }
+
+                            //resultado = get32ResultadosMenos(urlAnt);
                             //System.out.println("salida case 3: " + resultado);
                             break;
                         case 3:
                             System.out.println("_= listando 32 libros mas =_");
                             //System.out.println("urlProx case 3: " + resultado.getProximo());
                             String urlProx = resultado.getProximo();
-                            resultado = get32ResultadosMas(urlProx);
+
+                            resultado = getResultados(urlProx).getInicial();
+                            libros = getResultados(urlProx).getPaginado();
+//                            for (Libro libro : libros) {
+//                                System.out.println(libro);
+//                            }
+                            for(int i = 0; i < libros.size(); i++) {
+                                System.out.println(libros.get(i));
+                            }
+
+                            //resultado = get32ResultadosMas(urlProx);
                             //System.out.println("salida case 3: " + resultado);
                             break;
                         case 0:
@@ -217,11 +240,6 @@ public class Principal {
     }
 
 
-
-
-
     // Crear método registrarLibro
-
-    //Crear método listar los libros y sus Ids
 
 }
