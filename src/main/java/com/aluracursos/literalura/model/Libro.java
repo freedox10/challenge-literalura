@@ -77,7 +77,7 @@ public class Libro {
 
     @Override
     public String toString() {
-        return  "Id: " + idGut +
+        return  "IdGut: " + idGut +
                 " - " + titulo +
                 ", autores: " + autores +
                 ", idiomas: " + idiomas +

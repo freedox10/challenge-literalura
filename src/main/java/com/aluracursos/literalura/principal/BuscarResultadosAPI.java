@@ -4,6 +4,7 @@ import com.aluracursos.literalura.model.*;
 import com.aluracursos.literalura.service.ConsumoAPI;
 import com.aluracursos.literalura.service.ConvierteDatos;
 import com.aluracursos.literalura.service.ConvierteDatosSelectivo;
+import com.aluracursos.literalura.service.ConvierteDatosSelectivoPuro;
 
 import java.util.List;
 import java.util.Scanner;
@@ -15,7 +16,8 @@ public class BuscarResultadosAPI {
     // Instanciar un objeto ConvierteDatos
     private final ConvierteDatos conversor = new ConvierteDatos();
     // Instanciar un objeto ConvierteDatosSelectivo
-    private final ConvierteDatosSelectivo conversorSelectivo2 = new ConvierteDatosSelectivo();
+    //private final ConvierteDatosSelectivo conversorSelectivo = new ConvierteDatosSelectivo();
+    private final ConvierteDatosSelectivoPuro convierteDatosSelectivoPuro = new ConvierteDatosSelectivoPuro();
     // Instanciar un objeto ContenedorResultados
     private final ContenedorResultados contenedor = new ContenedorResultados();
 
@@ -27,18 +29,17 @@ public class BuscarResultadosAPI {
 
         var resultado = getResultados(url).getInicial();
         var libros = getResultados(url).getPaginado();
-        System.out.println("var libros"+libros);
+        //System.out.println("var libros"+libros);
 
         imprimeLibros(libros);
 
-//        for (int i = 0; i < libros.size(); i++) {
-//            System.out.println(libros.get(i));
-//        }
-        //System.out.println("libros: "+libros);
+        //for (int i = 0; i < libros.size(); i++) {
+        //    System.out.println(libros.get(i));
+        //}
         //for (Libro libro : libros) {
         //    System.out.println(libro);
         //}
-        //System.out.println(datosLibros.toString());
+        //System.out.println(libro.toString());
 
         String msg = "Ingrese una opción";
         var palabra = "";
@@ -46,10 +47,16 @@ public class BuscarResultadosAPI {
         var opcion3 = -1;
         while (opcion3 != 0) {
 
-
-            Integer nroLibros = resultado.getCantidad();
-            var msg2 = "  > " + nroLibros + " Libros encontrados < 32 mostrados >";
+            int mostrados;
+            int nroLibros = resultado.getCantidad();
+            if (nroLibros<32){
+                mostrados = nroLibros;
+            }else {
+                mostrados = 32;
+            }
+            var msg2 = "  > " + nroLibros + " Libros encontrados < " + mostrados + " mostrados >";
             var msg3 = "--> Escribe el IdGut del libro a registrar";
+
             switch (nroLibros) {
                 case 0:
                     System.out.println("Libro no encontrado");
@@ -176,8 +183,11 @@ public class BuscarResultadosAPI {
         Resultados resultado = new Resultados(datos);
         //System.out.println("resultado pagina: " + resultado);
 
-        List<Libro> listaLibros = conversorSelectivo2.obtenerDatosSelectivo2(json);
-        System.out.println("List<Libro> listaLibros" + listaLibros);
+        List<DatosLibro> listaDatosLibros = convierteDatosSelectivoPuro.obtenerDatosSelectivoPuro(json);
+        //System.out.println("List<DatosLibro> listaDatosLibros" + listaDatosLibros);
+
+        List<Libro> listaLibros = convierteDatosSelectivoPuro.convierteListaDLaListaL(listaDatosLibros);
+        //System.out.println("List<Libro> listaLibros" + listaLibros);
 
         contenedor.setInicial(resultado);
         contenedor.setPaginado(listaLibros);
@@ -189,28 +199,13 @@ public class BuscarResultadosAPI {
     private void imprimeLibros(List<Libro> librospasados){
 
         for (int i = 0; i < librospasados.size(); i++) {
-
-            System.out.println("librospasados.get(i)"+librospasados.get(i));
-            System.out.println("librospasados.get(i)String.valueOf"+String.valueOf(librospasados.get(i)));
-
-            String libroNN = String.valueOf(librospasados.get(i));
-            System.out.println("libroNN"+libroNN);
-
-            DatosLibro datos = conversor.obtenerDatos(libroNN, DatosLibro.class);
-            System.out.println("datos"+datos);
-
-            Libro resultado = new Libro(datos);
-            System.out.println("resultado"+resultado);
-
-            System.out.println(resultado);
-
+            System.out.println(librospasados.get(i));
         }
+        //for (Libro librospasados : librospasados) {
+        //    System.out.println(librospasados);
+        //}
+        //System.out.println(librospasados.toString());
 
-
-        //DatosResultados datos = conversor.obtenerDatos(json, DatosResultados.class);
-        //System.out.println("datos pagina: " + datos);
-        //Resultados resultado = new Resultados(datos);
-        //System.out.println("resultado pagina: " + resultado);
     }
 
 }
