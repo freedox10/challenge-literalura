@@ -30,8 +30,5 @@ public class ContenedorResultados {
         this.paginado = paginado;
     }
 
-    @Override
-    public String toString() {
-        return paginado.toString();
-    }
+    
 }

@@ -1,12 +1,19 @@
 package com.aluracursos.literalura.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 public class Libro {
+    @JsonProperty("id")
     private Integer idGut;
+    @JsonProperty("title")
     private String titulo;
+    @JsonProperty("authors")
     private List<Autor> autores;
+    @JsonProperty("languages")
     private List<String> idiomas;
+    @JsonProperty("download_count")
     private Integer cantidadBajadas;
 
     public Libro() {

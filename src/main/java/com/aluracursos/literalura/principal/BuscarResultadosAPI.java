@@ -1,21 +1,22 @@
 package com.aluracursos.literalura.principal;
 
-import com.aluracursos.literalura.model.ContenedorResultados;
-import com.aluracursos.literalura.model.DatosResultados;
-import com.aluracursos.literalura.model.Libro;
-import com.aluracursos.literalura.model.Resultados;
+import com.aluracursos.literalura.model.*;
 import com.aluracursos.literalura.service.ConsumoAPI;
 import com.aluracursos.literalura.service.ConvierteDatos;
-import com.aluracursos.literalura.service.ConvierteDatosSelectivo2;
+import com.aluracursos.literalura.service.ConvierteDatosSelectivo;
 
 import java.util.List;
 import java.util.Scanner;
 
 public class BuscarResultadosAPI {
     private final Scanner teclado = new Scanner(System.in);
+    // Instanciar un objeto ConsumoAPI
     private final ConsumoAPI consumoApi = new ConsumoAPI();
+    // Instanciar un objeto ConvierteDatos
     private final ConvierteDatos conversor = new ConvierteDatos();
-    private final ConvierteDatosSelectivo2 conversorSelectivo2 = new ConvierteDatosSelectivo2();
+    // Instanciar un objeto ConvierteDatosSelectivo
+    private final ConvierteDatosSelectivo conversorSelectivo2 = new ConvierteDatosSelectivo();
+    // Instanciar un objeto ContenedorResultados
     private final ContenedorResultados contenedor = new ContenedorResultados();
 
     public void buscarResultados() {
@@ -26,20 +27,29 @@ public class BuscarResultadosAPI {
 
         var resultado = getResultados(url).getInicial();
         var libros = getResultados(url).getPaginado();
+        System.out.println("var libros"+libros);
 
-        //System.out.println("libros: "+libros);
-//        for (Libro libro : libros) {
-//            System.out.println(libro);
+        imprimeLibros(libros);
+
+//        for (int i = 0; i < libros.size(); i++) {
+//            System.out.println(libros.get(i));
 //        }
-        for (int i = 0; i < libros.size(); i++) {
-            System.out.println(libros.get(i));
-        }
+        //System.out.println("libros: "+libros);
+        //for (Libro libro : libros) {
+        //    System.out.println(libro);
+        //}
         //System.out.println(datosLibros.toString());
 
-
+        String msg = "Ingrese una opción";
+        var palabra = "";
+        var palabra2 ="";
         var opcion3 = -1;
         while (opcion3 != 0) {
+
+
             Integer nroLibros = resultado.getCantidad();
+            var msg2 = "  > " + nroLibros + " Libros encontrados < 32 mostrados >";
+            var msg3 = "--> Escribe el IdGut del libro a registrar";
             switch (nroLibros) {
                 case 0:
                     System.out.println("Libro no encontrado");
@@ -51,6 +61,7 @@ public class BuscarResultadosAPI {
                     System.out.println("    1 Libro encontrado");
                     System.out.println("1 - Registrar este Libro");
                     System.out.println("0 - Menu principal");
+
                     var opcion2 = -1;
                     opcion2 = teclado.nextInt();
                     teclado.nextLine();
@@ -67,66 +78,88 @@ public class BuscarResultadosAPI {
                     break;
 
                 default:
-                    System.out.println(resultado.getCantidad()
-                            + " Libros encontrados, 32 mostrados");
+                    System.out.println(msg2);
                     System.out.println();
-                    System.out.println("--> Escribe el IdGut del libro a registrar");
 
                     if (resultado.getAnterior() != null) {
-                        System.out.println("2 - Ver 32 libros menos");
+                        System.out.println("1 - Ver 32 libros menos");
                     }
                     if (resultado.getProximo() != null) {
-                        System.out.println("3 - Ver 32 libros mas");
+                        System.out.println("2 - Ver 32 libros mas");
                     }
+                    System.out.println("3 - Listar de nuevo estos 32 libros");
                     System.out.println("0 - volver menu principal");
 
-                    opcion3 = teclado.nextInt();
-                    teclado.nextLine();
+                    System.out.println(msg3);
+                    System.out.println(msg);
 
-                    switch (opcion3) {
-                        case 1:
-                            System.out.println("* metodo para escribir id y registrar libro");
-                            break;
-                        case 2:
-                            System.out.println("_= listando 32 libros menos =_");
-                            //System.out.println("urlAnt case 3: " + resultado.getAnterior());
-                            String urlAnt = resultado.getAnterior();
+                    try {
+                        palabra = teclado.nextLine();
+                        opcion3 = Integer.parseInt(palabra);
 
-                            resultado = getResultados(urlAnt).getInicial();
-                            libros = getResultados(urlAnt).getPaginado();
-//                            for (Libro libro : libros) {
-//                                System.out.println(libro);
-//                            }
-                            for (int i = 0; i < libros.size(); i++) {
-                                System.out.println(libros.get(i));
-                            }
+                        switch (opcion3) {
+                            case -2:
+                                System.out.println("* metodo para escribir id y registrar libro");
+                                break;
+                            case 1:
+                                System.out.println("_= listando 32 libros menos =_");
+                                //System.out.println("urlAnt case 3: " + resultado.getAnterior());
+                                String urlAnt = resultado.getAnterior();
 
-                            //resultado = get32ResultadosMenos(urlAnt);
-                            //System.out.println("salida case 3: " + resultado);
-                            break;
-                        case 3:
-                            System.out.println("_= listando 32 libros mas =_");
-                            //System.out.println("urlProx case 3: " + resultado.getProximo());
-                            String urlProx = resultado.getProximo();
+                                resultado = getResultados(urlAnt).getInicial();
+                                libros = getResultados(urlAnt).getPaginado();
+                                //for (Libro libro : libros) {
+                                //    System.out.println(libro);
+                                //}
+                                for (int i = 0; i < libros.size(); i++) {
+                                    System.out.println(libros.get(i));
+                                }
 
-                            resultado = getResultados(urlProx).getInicial();
-                            libros = getResultados(urlProx).getPaginado();
-//                            for (Libro libro : libros) {
-//                                System.out.println(libro);
-//                            }
-                            for (int i = 0; i < libros.size(); i++) {
-                                System.out.println(libros.get(i));
-                            }
+                                //System.out.println("salida case 3: " + resultado);
+                                break;
+                            case 2:
+                                System.out.println("_= listando 32 libros mas =_");
+                                //System.out.println("urlProx case 3: " + resultado.getProximo());
+                                String urlProx = resultado.getProximo();
 
-                            //resultado = get32ResultadosMas(urlProx);
-                            //System.out.println("salida case 3: " + resultado);
-                            break;
-                        case 0:
+                                resultado = getResultados(urlProx).getInicial();
+                                libros = getResultados(urlProx).getPaginado();
+                                //for (Libro libro : libros) {
+                                //    System.out.println(libro);
+                                //}
+                                for (int i = 0; i < libros.size(); i++) {
+                                    System.out.println(libros.get(i));
+                                }
 
-                            break;
-                        default:
-                            System.out.println("Opción inválida");
+                                //System.out.println("salida case 3: " + resultado);
+                                break;
+                            case 3:
+                                for (int i = 0; i < libros.size(); i++) {
+                                    System.out.println(libros.get(i));
+                                }
+                                msg2 = "  > " + nroLibros + " Libros encontrados < 32 mostrados >";
+                                msg3 = "--> Escribe el IdGut del libro a registrar";
+                            case 0:
+
+                                break;
+                            default:
+//                                for (int i = 0; i < contenedor.getPaginado().size(); i++) {
+//
+//                                }
+                                // Metodo para seleccionar y registrar por IdGut
+
+                                msg = "Opción inválida, prueve de nuevo";
+                                msg2 = "";
+                                msg3 = "--> Escribe el IdGut del libro a registrar";
+
+                        }
+
+                    } catch (NumberFormatException e) {
+                        //System.out.println("lanzó el NumberFormatException");
+                        //e.printStackTrace();
+                        msg = "Ingrese números";
                     }
+
 
             }
 
@@ -143,13 +176,41 @@ public class BuscarResultadosAPI {
         Resultados resultado = new Resultados(datos);
         //System.out.println("resultado pagina: " + resultado);
 
-        List<Libro> libros = conversorSelectivo2.obtenerDatosSelectivo2(json);
+        List<Libro> listaLibros = conversorSelectivo2.obtenerDatosSelectivo2(json);
+        System.out.println("List<Libro> listaLibros" + listaLibros);
 
         contenedor.setInicial(resultado);
-        contenedor.setPaginado(libros);
+        contenedor.setPaginado(listaLibros);
 
         return contenedor;
 
+    }
+
+    private void imprimeLibros(List<Libro> librospasados){
+
+        for (int i = 0; i < librospasados.size(); i++) {
+
+            System.out.println("librospasados.get(i)"+librospasados.get(i));
+            System.out.println("librospasados.get(i)String.valueOf"+String.valueOf(librospasados.get(i)));
+
+            String libroNN = String.valueOf(librospasados.get(i));
+            System.out.println("libroNN"+libroNN);
+
+            DatosLibro datos = conversor.obtenerDatos(libroNN, DatosLibro.class);
+            System.out.println("datos"+datos);
+
+            Libro resultado = new Libro(datos);
+            System.out.println("resultado"+resultado);
+
+            System.out.println(resultado);
+
+        }
+
+
+        //DatosResultados datos = conversor.obtenerDatos(json, DatosResultados.class);
+        //System.out.println("datos pagina: " + datos);
+        //Resultados resultado = new Resultados(datos);
+        //System.out.println("resultado pagina: " + resultado);
     }
 
 }

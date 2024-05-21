@@ -14,6 +14,7 @@ public class LiteraluraApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		// Instanciar un objeto Principal
 		Principal principal = new Principal();
 		principal.muestraElMenu();
 

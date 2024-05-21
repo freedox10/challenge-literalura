@@ -1,26 +1,13 @@
 package com.aluracursos.literalura.principal;
 
-import com.aluracursos.literalura.model.*;
-import com.aluracursos.literalura.service.ConsumoAPI;
-import com.aluracursos.literalura.service.ConvierteDatos;
-import com.aluracursos.literalura.service.ConvierteDatosSelectivo;
-import com.aluracursos.literalura.service.ConvierteDatosSelectivo2;
 
-import java.util.InputMismatchException;
-import java.util.List;
 import java.util.Scanner;
 
 public class Principal {
+    // Instanciar un objeto Scanner
     private final Scanner teclado = new Scanner(System.in);
-    // Instanciar un objeto ConsumoAPI
-    private final ConsumoAPI consumoApi = new ConsumoAPI();
-    //private final String URL_BASE = "https://gutendex.com/books";
-    // Instanciar un objeto ConvierteDatos
-    private final ConvierteDatos conversor = new ConvierteDatos();
-    //private ConvierteDatosSelectivo conversorSelectivo = new ConvierteDatosSelectivo();
-    private final ConvierteDatosSelectivo2 conversorSelectivo2 = new ConvierteDatosSelectivo2();
-    private final ContenedorResultados contenedor = new ContenedorResultados();
-    private BuscarResultadosAPI buscarResultadosAPI = new BuscarResultadosAPI();
+    // Instanciar un objeto ContenedorResultados
+    private final BuscarResultadosAPI buscarResultadosAPI = new BuscarResultadosAPI();
 
 
     public void muestraElMenu() {
@@ -45,7 +32,6 @@ public class Principal {
                 switch (opcion) {
                     case 1:
                         buscarResultadosAPI.buscarResultados();
-                        //buscarResultados();
                         msg = "Ingrese una opción";
                         break;
                     case 0:
@@ -61,7 +47,8 @@ public class Principal {
                 }
 
             } catch (NumberFormatException e) {
-                //System.out.println("lanzó el InputMismatchException");
+                //System.out.println("lanzó el NumberFormatException");
+                //e.printStackTrace();
                 msg = "Ingrese números";
             }
         }
