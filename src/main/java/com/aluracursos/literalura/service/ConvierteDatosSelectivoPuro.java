@@ -14,12 +14,12 @@ import java.util.stream.Collectors;
 public class ConvierteDatosSelectivoPuro {
     private final ObjectMapper mapper = new ObjectMapper();
 
-    public List<DatosLibro> obtenerDatosSelectivoPuro(String json) {
+    public List<DatosLibro> obtenerDatosSelectivoPuro(String json, String nodo) {
         try {
             JsonNode rootNode = mapper.readTree(json);
             //System.out.println("Arbol: " + rootNode);
 
-            JsonNode resultsNode = rootNode.get("results");
+            JsonNode resultsNode = rootNode.get(nodo);
             //System.out.println("Nodo results: " + resultsNode);
             //System.out.println("Nodo results.toString: " + resultsNode.toString());
 

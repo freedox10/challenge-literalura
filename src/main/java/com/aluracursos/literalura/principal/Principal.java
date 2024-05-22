@@ -11,18 +11,20 @@ public class Principal {
 
 
     public void muestraElMenu() {
-        String msg = "Ingrese una opción";
+        String msg = "> Ingrese una opción <";
         var palabra = "";
         var opcion = -1;
         while (opcion !=0){
             var menu = """
-                    1 - Buscar Libro por Título y/o Autor
-                    2 - Listar Libros Registrados
-                    3 - Listar Autores Registrados
-                    4 - Listar Autores Vivos en un determinado Año
-                    5 - Listar Libros por Idioma
-                    0 - Salir
-                    """;
+                                 _=' LITERALURA '=_
+                    ===============================================>>
+                     1 - Buscar Libro por Título y/o Autor
+                     2 - Listar Libros Registrados
+                     3 - Listar Autores Registrados
+                     4 - Listar Autores Vivos en un determinado Año
+                     5 - Listar Libros por Idioma
+                     0 - Salir                        AAF+ONE+Alura
+                    ===============================================>>""";
             System.out.println(menu);
             System.out.println(msg);
             try {
@@ -32,28 +34,31 @@ public class Principal {
                 switch (opcion) {
                     case 1:
                         buscarResultadosAPI.buscarResultados();
-                        msg = "Ingrese una opción";
+                        msg = "> Ingrese una opción <";
                         break;
                     case 0:
                         var salida = """
-                                   Gracias por utilizar nuestra
-                                           LITERALURA ;)
-                            _by_----- Aplicación Finalizada -----_AAF_
+                            >>=============================================<<
+                                       Gracias por utilizar nuestra
+                                              LITERALURA ;)
+                            _by_-----     Aplicación Finalizada    -----_AAF_
+                            >>=============================================<<
                             """;
                         System.out.println(salida);
                         break;
                     default:
-                        msg = "Opción inválida, prueve de nuevo";
+                        msg = "> Opción inválida, prueve de nuevo <";
                 }
 
             } catch (NumberFormatException e) {
                 //System.out.println("lanzó el NumberFormatException");
                 //e.printStackTrace();
-                msg = "Ingrese números";
+                msg = "> Ingrese números <";
             }
+
         }
+
     }
 
-    // Crear método registrarLibro
-
 }
+

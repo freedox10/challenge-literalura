@@ -22,7 +22,7 @@ public class BuscarResultadosAPI {
     private final ContenedorResultados contenedor = new ContenedorResultados();
 
     public void buscarResultados() {
-        System.out.println("Escribe el título y/o autor del libro: ");
+        System.out.println("> Escribe el título y/o autor del libro <");
         var busqueda = teclado.nextLine();
         //System.out.println(busqueda);
         String url = "https://gutendex.com/books/?search=" + busqueda.replace(" ", "%20");
@@ -41,136 +41,158 @@ public class BuscarResultadosAPI {
         //}
         //System.out.println(libro.toString());
 
-        String msg = "Ingrese una opción";
-        var palabra = "";
-        var palabra2 ="";
+        String msg = "> Ingrese una opción <";
+        var palabra2 = "";
+        var palabra3 ="";
         var opcion3 = -1;
-        while (opcion3 != 0) {
 
-            int mostrados;
+            int pagina = 1;
             int nroLibros = resultado.getCantidad();
-            if (nroLibros<32){
-                mostrados = nroLibros;
-            }else {
-                mostrados = 32;
-            }
-            var msg2 = "  > " + nroLibros + " Libros encontrados < " + mostrados + " mostrados >";
-            var msg3 = "--> Escribe el IdGut del libro a registrar";
+            int librosPorPagina = libros.size();
+
+            var msg2 = "  > " + nroLibros + " Libros encontrados < " + librosPorPagina + " mostrados > página " + pagina + " <";
 
             switch (nroLibros) {
                 case 0:
-                    System.out.println("Libro no encontrado");
-                    System.out.println(" ");
+                    var menu_1_0 = """
+                        ----------------------------------------------->>
+                                    -  Libro no encontrado  -
+                        ----------------------------------------------->>""";
+                    System.out.println(menu_1_0);
                     opcion3 = 0;
                     break;
 
                 case 1:
-                    System.out.println("    1 Libro encontrado");
-                    System.out.println("1 - Registrar este Libro");
-                    System.out.println("0 - Menu principal");
 
                     var opcion2 = -1;
-                    opcion2 = teclado.nextInt();
-                    teclado.nextLine();
-                    switch (opcion2) {
-                        case 1:
-                            System.out.println("Aca va el metodo add libro");
-                            break;
-                        case 0:
-                            break;
-                        default:
-                            System.out.println("Opción inválida");
+                    while (opcion2 != 0){
+
+                        var menu_1_1 = """                            
+                                        < 1 Libro encontrado >
+                             1 - Registrar este Libro
+                             2 - Mostrar de nuevo libro encontrado
+                             0 - Menu principal
+                            ----------------------------------------------->>""";
+                        System.out.println(menu_1_1);
+                        System.out.println(msg);
+
+                        try {
+                            palabra2 = teclado.nextLine();
+                            opcion2 = Integer.parseInt(palabra2);
+
+                            switch (opcion2) {
+                                case 1:
+                                    System.out.println("Aca va el metodo add libro");
+                                    break;
+                                case 2:
+                                    imprimeLibros(libros);
+                                    msg = "> Ingrese una opción <";
+                                    break;
+                                case 0:
+                                    break;
+                                default:
+                                    System.out.println("> Opción inválida <");
+                                    msg = "> Opción inválida, prueve de nuevo <";
+                            }
+
+                        }catch (NumberFormatException e) {
+                            //System.out.println("lanzó el NumberFormatException");
+                            //e.printStackTrace();
+                            //System.out.println("> Ingrese números <");
+                            msg = "> Ingrese números <";
+                        }
+
                     }
                     opcion3 = 0;
                     break;
 
                 default:
-                    System.out.println(msg2);
-                    System.out.println();
+                    while (opcion3 != 0){
 
-                    if (resultado.getAnterior() != null) {
-                        System.out.println("1 - Ver 32 libros menos");
-                    }
-                    if (resultado.getProximo() != null) {
-                        System.out.println("2 - Ver 32 libros mas");
-                    }
-                    System.out.println("3 - Listar de nuevo estos 32 libros");
-                    System.out.println("0 - volver menu principal");
+                        System.out.println(msg2);
+                        System.out.println();
 
-                    System.out.println(msg3);
-                    System.out.println(msg);
-
-                    try {
-                        palabra = teclado.nextLine();
-                        opcion3 = Integer.parseInt(palabra);
-
-                        switch (opcion3) {
-                            case -2:
-                                System.out.println("* metodo para escribir id y registrar libro");
-                                break;
-                            case 1:
-                                System.out.println("_= listando 32 libros menos =_");
-                                //System.out.println("urlAnt case 3: " + resultado.getAnterior());
-                                String urlAnt = resultado.getAnterior();
-
-                                resultado = getResultados(urlAnt).getInicial();
-                                libros = getResultados(urlAnt).getPaginado();
-                                //for (Libro libro : libros) {
-                                //    System.out.println(libro);
-                                //}
-                                for (int i = 0; i < libros.size(); i++) {
-                                    System.out.println(libros.get(i));
-                                }
-
-                                //System.out.println("salida case 3: " + resultado);
-                                break;
-                            case 2:
-                                System.out.println("_= listando 32 libros mas =_");
-                                //System.out.println("urlProx case 3: " + resultado.getProximo());
-                                String urlProx = resultado.getProximo();
-
-                                resultado = getResultados(urlProx).getInicial();
-                                libros = getResultados(urlProx).getPaginado();
-                                //for (Libro libro : libros) {
-                                //    System.out.println(libro);
-                                //}
-                                for (int i = 0; i < libros.size(); i++) {
-                                    System.out.println(libros.get(i));
-                                }
-
-                                //System.out.println("salida case 3: " + resultado);
-                                break;
-                            case 3:
-                                for (int i = 0; i < libros.size(); i++) {
-                                    System.out.println(libros.get(i));
-                                }
-                                msg2 = "  > " + nroLibros + " Libros encontrados < 32 mostrados >";
-                                msg3 = "--> Escribe el IdGut del libro a registrar";
-                            case 0:
-
-                                break;
-                            default:
-//                                for (int i = 0; i < contenedor.getPaginado().size(); i++) {
-//
-//                                }
-                                // Metodo para seleccionar y registrar por IdGut
-
-                                msg = "Opción inválida, prueve de nuevo";
-                                msg2 = "";
-                                msg3 = "--> Escribe el IdGut del libro a registrar";
-
+                        if (resultado.getAnterior() != null) {
+                            System.out.println(" 1 - Ver 32 libros menos");
                         }
+                        if (resultado.getProximo() != null) {
+                            System.out.println(" 2 - Ver 32 libros mas");
+                        }
+                        System.out.println(" 3 - Listar de nuevo estos " + librosPorPagina + " libros");
+                        System.out.println(" 4 - Registrar PRIMER LIBRO de la lista, ó");
+                        System.out.println(" --> Escribe el IdGut del libro a registrar");
+                        System.out.println(" 0 - Volver al menu principal");
+                        System.out.println("----------------------------------------------->>");
+                        System.out.println(msg);
 
-                    } catch (NumberFormatException e) {
-                        //System.out.println("lanzó el NumberFormatException");
-                        //e.printStackTrace();
-                        msg = "Ingrese números";
+                        try {
+                            palabra3 = teclado.nextLine();
+                            opcion3 = Integer.parseInt(palabra3);
+
+                            switch (opcion3) {
+                                case -2:
+                                    System.out.println("* metodo para escribir id y registrar libro");
+                                    break;
+                                case 1:
+                                    if (resultado.getAnterior() != null){
+                                        System.out.println("_= listando 32 libros menos =_");
+                                        //System.out.println("urlAnt case 3: " + resultado.getAnterior());
+                                        String urlAnt = resultado.getAnterior();
+
+                                        resultado = getResultados(urlAnt).getInicial();
+                                        libros = getResultados(urlAnt).getPaginado();
+
+                                        imprimeLibros(libros);
+                                        pagina--;
+                                        msg2 = "  > " + nroLibros + " Libros encontrados < " + librosPorPagina + " mostrados > página " + pagina + " <";
+                                    } else {
+                                        msg2 = "  > " + nroLibros + " Libros encontrados < ";
+                                    }
+                                    break;
+                                case 2:
+                                    if (resultado.getProximo() != null){
+                                        System.out.println("_= listando 32 libros mas =_");
+                                        //System.out.println("urlProx case 3: " + resultado.getProximo());
+                                        String urlProx = resultado.getProximo();
+
+                                        resultado = getResultados(urlProx).getInicial();
+                                        libros = getResultados(urlProx).getPaginado();
+
+                                        imprimeLibros(libros);
+                                        pagina++;
+                                        msg2 = "  > " + nroLibros + " Libros encontrados < " + librosPorPagina + " mostrados > página " + pagina + " <";
+                                    } else {
+                                        msg2 = "  > " + nroLibros + " Libros encontrados < ";
+                                    }
+                                    break;
+                                case 3:
+                                    imprimeLibros(libros);
+                                    msg = "> Ingrese una opción <";
+                                    msg2 = "  > " + nroLibros + " Libros encontrados < " + librosPorPagina + " mostrados > página " + pagina + " <";
+                                    break;
+                                case 4:
+                                    System.out.println("* metodo para registrar libro *");
+                                    break;
+                                case 0:
+
+                                    break;
+                                default:
+
+                                    msg = "> Opción inválida, prueve de nuevo <";
+                                    msg2 = "  > " + nroLibros + " Libros encontrados < ";
+
+                            }
+
+                        } catch (NumberFormatException | NullPointerException e) {
+                            //System.out.println("lanzó el NumberFormatException");
+                            //e.printStackTrace();
+                            msg = "> Ingrese números <";
+                        }
                     }
 
 
             }
 
-        }
     }
 
     private ContenedorResultados getResultados(String url){
@@ -183,7 +205,8 @@ public class BuscarResultadosAPI {
         Resultados resultado = new Resultados(datos);
         //System.out.println("resultado pagina: " + resultado);
 
-        List<DatosLibro> listaDatosLibros = convierteDatosSelectivoPuro.obtenerDatosSelectivoPuro(json);
+        var nodo = "results";
+        List<DatosLibro> listaDatosLibros = convierteDatosSelectivoPuro.obtenerDatosSelectivoPuro(json, nodo);
         //System.out.println("List<DatosLibro> listaDatosLibros" + listaDatosLibros);
 
         List<Libro> listaLibros = convierteDatosSelectivoPuro.convierteListaDLaListaL(listaDatosLibros);
@@ -205,6 +228,10 @@ public class BuscarResultadosAPI {
         //    System.out.println(librospasados);
         //}
         //System.out.println(librospasados.toString());
+
+    }
+
+    private void registrarLibro(){
 
     }
 
