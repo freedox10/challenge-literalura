@@ -1,18 +1,36 @@
 package com.aluracursos.literalura.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
 
 import java.util.List;
 
+@Entity
+@Table(name = "libros")
 public class Libro {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @JsonProperty("id")
     private Integer idGut;
+
     @JsonProperty("title")
     private String titulo;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "libro_autores",
+            joinColumns = @JoinColumn(name = "libro_id"),
+            inverseJoinColumns = @JoinColumn(name = "autor_id")
+    )
     @JsonProperty("authors")
     private List<Autor> autores;
+
+    @ElementCollection
     @JsonProperty("languages")
     private List<String> idiomas;
+
     @JsonProperty("download_count")
     private Integer cantidadBajadas;
 

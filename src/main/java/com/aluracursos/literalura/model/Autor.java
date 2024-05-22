@@ -1,22 +1,36 @@
 package com.aluracursos.literalura.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
 
+import java.util.List;
+
+@Entity
+@Table(name = "autores")
 public class Autor {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    
     @JsonProperty("name")
     private String nombre;
+    
     @JsonProperty("birth_year")
-    private String anoNacimiento;
+    private String anioNacimiento;
+    
     @JsonProperty("death_year")
-    private String anoMuerte;
+    private String anioMuerte;
+    
+    @ManyToMany(mappedBy = "autores")
+    private List<Libro> libros;
 
     public Autor(){}
 
-    public Autor(String nombre, String anoNacimiento, String anoMuerte) {
+    public Autor(String nombre, String anioNacimiento, String anioMuerte) {
         this.nombre = nombre;
-        this.anoNacimiento = anoNacimiento;
-        this.anoMuerte = anoMuerte;
+        this.anioNacimiento = anioNacimiento;
+        this.anioMuerte = anioMuerte;
     }
 
     public String getNombre() {
@@ -27,28 +41,28 @@ public class Autor {
         this.nombre = nombre;
     }
 
-    public String getAnoNacimiento() {
-        return anoNacimiento;
+    public String getanioNacimiento() {
+        return anioNacimiento;
     }
 
-    public void setAnoNacimiento(String anoNacimiento) {
-        this.anoNacimiento = anoNacimiento;
+    public void setanioNacimiento(String anioNacimiento) {
+        this.anioNacimiento = anioNacimiento;
     }
 
-    public String getAnoMuerte() {
-        return anoMuerte;
+    public String getanioMuerte() {
+        return anioMuerte;
     }
 
-    public void setAnoMuerte(String anoMuerte) {
-        this.anoMuerte = anoMuerte;
+    public void setanioMuerte(String anioMuerte) {
+        this.anioMuerte = anioMuerte;
     }
 
     @Override
     public String toString() {
         return "Autor{" +
                 "nombre='" + nombre + '\'' +
-                ", anoNacimiento='" + anoNacimiento + '\'' +
-                ", anoMuerte='" + anoMuerte + '\'' +
+                ", anioNacimiento='" + anioNacimiento + '\'' +
+                ", anioMuerte='" + anioMuerte + '\'' +
                 '}';
     }
 }
