@@ -1,12 +1,20 @@
 package com.aluracursos.literalura.model;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.List;
+
 public class Resultados {
 
+    @JsonProperty
     private Integer cantidad;
+    @JsonProperty
     private String proximo;
+    @JsonProperty
     private String anterior;
-    //private List<Libro> resultados;
+    @JsonProperty
+    private List<DatosLibro> resultados;
 
 
     public Resultados() {
@@ -16,7 +24,7 @@ public class Resultados {
         this.cantidad = datosResultados.cantidad();
         this.proximo = datosResultados.proximo();
         this.anterior = datosResultados.anterior();
-        //this.resultados = datosResultados.resultados();
+        this.resultados = datosResultados.resultados();
     }
 
     public Integer getCantidad() {
@@ -43,13 +51,13 @@ public class Resultados {
         this.anterior = anterior;
     }
 
-//    public List<Libro> getResultados() {
-//        return resultados;
-//    }
-//
-//    public void setResultados(List<Libro> resultados) {
-//        this.resultados = resultados;
-//    }
+    public List<DatosLibro> getResultados() {
+        return resultados;
+    }
+
+    public void setResultados(List<DatosLibro> resultados) {
+        this.resultados = resultados;
+    }
 
 
     @Override

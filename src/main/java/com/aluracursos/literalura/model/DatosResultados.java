@@ -9,7 +9,7 @@ import java.util.List;
 public record DatosResultados(
         @JsonAlias("count") Integer cantidad,
         @JsonAlias("next") String proximo,
-        @JsonAlias("previous") String anterior//,
-        //@JsonAlias("results") List<Libro> resultados
+        @JsonAlias("previous") String anterior,
+        @JsonAlias("results") List<DatosLibro> resultados
 ) {
 }

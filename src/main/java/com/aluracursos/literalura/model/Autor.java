@@ -22,7 +22,7 @@ public class Autor {
     @JsonProperty("death_year")
     private String anioMuerte;
     
-    @ManyToMany(mappedBy = "autores")
+    @ManyToMany(mappedBy = "autores", fetch = FetchType.EAGER)
     private List<Libro> libros;
 
     public Autor(){}

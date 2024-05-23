@@ -3,8 +3,6 @@ package com.aluracursos.literalura.principal;
 import com.aluracursos.literalura.model.*;
 import com.aluracursos.literalura.service.ConsumoAPI;
 import com.aluracursos.literalura.service.ConvierteDatos;
-import com.aluracursos.literalura.service.ConvierteDatosSelectivo;
-import com.aluracursos.literalura.service.ConvierteDatosSelectivoPuro;
 
 import java.util.List;
 import java.util.Scanner;
@@ -15,9 +13,6 @@ public class BuscarResultadosAPI {
     private final ConsumoAPI consumoApi = new ConsumoAPI();
     // Instanciar un objeto ConvierteDatos
     private final ConvierteDatos conversor = new ConvierteDatos();
-    // Instanciar un objeto ConvierteDatosSelectivo
-    //private final ConvierteDatosSelectivo conversorSelectivo = new ConvierteDatosSelectivo();
-    private final ConvierteDatosSelectivoPuro convierteDatosSelectivoPuro = new ConvierteDatosSelectivoPuro();
     // Instanciar un objeto ContenedorResultados
     private final ContenedorResultados contenedor = new ContenedorResultados();
 
@@ -119,8 +114,8 @@ public class BuscarResultadosAPI {
                             System.out.println(" 2 - Ver 32 libros mas");
                         }
                         System.out.println(" 3 - Listar de nuevo estos " + librosPorPagina + " libros");
-                        System.out.println(" 4 - Registrar PRIMER LIBRO de la lista, ó");
-                        System.out.println(" --> Escribe el IdGut del libro a registrar");
+                        System.out.println(" 4 - Registrar PRIMER LIBRO de la lista, ó -->");
+                        System.out.println(" --> Escribe el >IdGut: del libro a registrar");
                         System.out.println(" 0 - Volver al menu principal");
                         System.out.println("----------------------------------------------->>");
                         System.out.println(msg);
@@ -201,16 +196,16 @@ public class BuscarResultadosAPI {
         //System.out.println("json: " + json);
 
         DatosResultados datos = conversor.obtenerDatos(json, DatosResultados.class);
-        //System.out.println("datos pagina: " + datos);
+        //System.out.println("datos completos: " + datos);
+        List<DatosLibro> resultados = datos.resultados();
+        //System.out.println("solo results a List<DatosLibro>: " + resultados);
         Resultados resultado = new Resultados(datos);
         //System.out.println("resultado pagina: " + resultado);
 
-        var nodo = "results";
-        List<DatosLibro> listaDatosLibros = convierteDatosSelectivoPuro.obtenerDatosSelectivoPuro(json, nodo);
-        //System.out.println("List<DatosLibro> listaDatosLibros" + listaDatosLibros);
-
-        List<Libro> listaLibros = convierteDatosSelectivoPuro.convierteListaDLaListaL(listaDatosLibros);
-        //System.out.println("List<Libro> listaLibros" + listaLibros);
+        List<Libro> listaLibros = resultados.stream()
+                .map(l->new Libro(l.idGut(), l.titulo(), l.autores(), l.idiomas(), l.cantidadBajadas()))
+                .toList();
+        //System.out.println("ListaPrueba List<Libro>: " + listaLibros);
 
         contenedor.setInicial(resultado);
         contenedor.setPaginado(listaLibros);
@@ -219,10 +214,10 @@ public class BuscarResultadosAPI {
 
     }
 
-    private void imprimeLibros(List<Libro> librospasados){
+    private void imprimeLibros(List<Libro> librosPasados){
 
-        for (int i = 0; i < librospasados.size(); i++) {
-            System.out.println(librospasados.get(i));
+        for (int i = 0; i < librosPasados.size(); i++) {
+            System.out.println(librosPasados.get(i));
         }
         //for (Libro librospasados : librospasados) {
         //    System.out.println(librospasados);

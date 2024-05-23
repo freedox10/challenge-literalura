@@ -3,6 +3,7 @@ package com.aluracursos.literalura.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -53,11 +54,11 @@ public class Libro {
         this.cantidadBajadas = datosLibro.cantidadBajadas();
     }
 
-    public Integer getIdGutemberg() {
+    public Integer getIdGut() {
         return idGut;
     }
 
-    public void setIdGutemberg(Integer idGut) {
+    public void setIdGut(Integer idGut) {
         this.idGut = idGut;
     }
 
