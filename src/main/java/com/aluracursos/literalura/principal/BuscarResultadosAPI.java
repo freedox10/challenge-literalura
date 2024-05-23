@@ -13,11 +13,9 @@ public class BuscarResultadosAPI {
     private final ConsumoAPI consumoApi = new ConsumoAPI();
     // Instanciar un objeto ConvierteDatos
     private final ConvierteDatos conversor = new ConvierteDatos();
-    // Instanciar un objeto ContenedorResultados
-    private final ContenedorResultados contenedor = new ContenedorResultados();
 
     public void buscarResultados() {
-        System.out.println("> Escribe el título y/o autor del libro <");
+        System.out.println("> Escribe el Título y/o el Autor del Libro <");
         var busqueda = teclado.nextLine();
         //System.out.println(busqueda);
         String url = "https://gutendex.com/books/?search=" + busqueda.replace(" ", "%20");
@@ -27,14 +25,6 @@ public class BuscarResultadosAPI {
         //System.out.println("var libros"+libros);
 
         imprimeLibros(libros);
-
-        //for (int i = 0; i < libros.size(); i++) {
-        //    System.out.println(libros.get(i));
-        //}
-        //for (Libro libro : libros) {
-        //    System.out.println(libro);
-        //}
-        //System.out.println(libro.toString());
 
         String msg = "> Ingrese una opción <";
         var palabra2 = "";
@@ -54,7 +44,6 @@ public class BuscarResultadosAPI {
                                     -  Libro no encontrado  -
                         ----------------------------------------------->>""";
                     System.out.println(menu_1_0);
-                    opcion3 = 0;
                     break;
 
                 case 1:
@@ -93,12 +82,10 @@ public class BuscarResultadosAPI {
                         }catch (NumberFormatException e) {
                             //System.out.println("lanzó el NumberFormatException");
                             //e.printStackTrace();
-                            //System.out.println("> Ingrese números <");
                             msg = "> Ingrese números <";
                         }
 
                     }
-                    opcion3 = 0;
                     break;
 
                 default:
@@ -197,32 +184,29 @@ public class BuscarResultadosAPI {
 
         DatosResultados datos = conversor.obtenerDatos(json, DatosResultados.class);
         //System.out.println("datos completos: " + datos);
-        List<DatosLibro> resultados = datos.resultados();
-        //System.out.println("solo results a List<DatosLibro>: " + resultados);
-        Resultados resultado = new Resultados(datos);
-        //System.out.println("resultado pagina: " + resultado);
 
-        List<Libro> listaLibros = resultados.stream()
+        Resultados resultado = new Resultados(datos);
+        System.out.println("resultado raíz Resultados: " + resultado);
+
+        List<Libro> libros = resultado.getResultados().stream()
                 .map(l->new Libro(l.idGut(), l.titulo(), l.autores(), l.idiomas(), l.cantidadBajadas()))
                 .toList();
-        //System.out.println("ListaPrueba List<Libro>: " + listaLibros);
+        System.out.println("ListaPrueba List<Libro>: " + libros);
 
-        contenedor.setInicial(resultado);
-        contenedor.setPaginado(listaLibros);
-
-        return contenedor;
+        return new ContenedorResultados(resultado, libros);
 
     }
 
     private void imprimeLibros(List<Libro> librosPasados){
 
-        for (int i = 0; i < librosPasados.size(); i++) {
-            System.out.println(librosPasados.get(i));
-        }
-        //for (Libro librospasados : librospasados) {
-        //    System.out.println(librospasados);
+        librosPasados.forEach(System.out::println);
+
+        //for (int i = 0; i < librosPasados.size(); i++) {
+        //    System.out.println(librosPasados.get(i));
         //}
-        //System.out.println(librospasados.toString());
+        //for (Libro librosPasados : librosPasados) {
+        //    System.out.println(librosPasados);
+        //}
 
     }
 

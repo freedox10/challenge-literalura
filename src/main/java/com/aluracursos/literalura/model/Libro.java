@@ -97,8 +97,8 @@ public class Libro {
     @Override
     public String toString() {
         return  ">IdGut:" + idGut +
-                "< '" + titulo +
-                "' autores: " + autores +
+                "< *" + titulo +
+                "* autores: " + autores +
                 ", idiomas: " + idiomas +
                 ", bajadas: " + cantidadBajadas;
     }
