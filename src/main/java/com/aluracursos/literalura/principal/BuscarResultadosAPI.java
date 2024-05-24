@@ -3,8 +3,10 @@ package com.aluracursos.literalura.principal;
 import com.aluracursos.literalura.model.*;
 import com.aluracursos.literalura.service.ConsumoAPI;
 import com.aluracursos.literalura.service.ConvierteDatos;
+import com.aluracursos.literalura.service.OperacionesDB;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class BuscarResultadosAPI {
@@ -13,6 +15,7 @@ public class BuscarResultadosAPI {
     private final ConsumoAPI consumoApi = new ConsumoAPI();
     // Instanciar un objeto ConvierteDatos
     private final ConvierteDatos conversor = new ConvierteDatos();
+    private final OperacionesDB operacionesDB = new OperacionesDB();
 
     public void buscarResultados() {
         System.out.println("> Escribe el Título y/o el Autor del Libro <");
@@ -66,7 +69,16 @@ public class BuscarResultadosAPI {
 
                             switch (opcion2) {
                                 case 1:
-                                    System.out.println("Aca va el metodo add libro");
+                                    Libro libroSeleccionado = libros.get(0);
+                                    operacionesDB.registrarLibro(libroSeleccionado);
+                                    System.out.println("-------------------- Libro -------------------->>");
+                                    System.out.println("Titulo: " + libroSeleccionado.getTitulo());
+                                    System.out.println("Autor: " + libroSeleccionado.getAutores().get(0).getNombre());
+                                    System.out.println("                 "+libroSeleccionado.getAutores().get(0).getanioNacimiento()+" - "+libroSeleccionado.getAutores().get(0).getanioMuerte());
+                                    System.out.println("----------------------------------------------->>");
+                                    System.out.println("             >> Registrado >>");
+                                    System.out.println("");
+                                    opcion2 = 0;
                                     break;
                                 case 2:
                                     imprimeLibros(libros);
@@ -152,15 +164,40 @@ public class BuscarResultadosAPI {
                                     msg2 = "  > " + nroLibros + " Libros encontrados < " + librosPorPagina + " mostrados > página " + pagina + " <";
                                     break;
                                 case 4:
-                                    System.out.println("* metodo para registrar libro *");
+                                    Libro libroSeleccionado2 = libros.get(0);
+                                    System.out.println("-------------------- Libro -------------------->>");
+                                    System.out.println("Titulo: " + libroSeleccionado2.getTitulo());
+                                    System.out.println("Autor: " + libroSeleccionado2.getAutores().get(0).getNombre());
+                                    System.out.println("                 "+libroSeleccionado2.getAutores().get(0).getanioNacimiento()+" - "+libroSeleccionado2.getAutores().get(0).getanioMuerte());
+                                    System.out.println("----------------------------------------------->>");
+                                    System.out.println("Aca va el método registrar libro");
+                                    System.out.println("             >> Registrado >>");
+                                    System.out.println("");
+                                    opcion3 = 0;
                                     break;
                                 case 0:
 
                                     break;
                                 default:
 
-                                    msg = "> Opción inválida, prueve de nuevo <";
-                                    msg2 = "  > " + nroLibros + " Libros encontrados < ";
+                                    int finalOpcion = opcion3;
+                                    Optional<Libro> libroSeleccionado3 = libros.stream()
+                                            .filter(l -> l.getIdGut().equals(finalOpcion))
+                                            .findFirst();
+                                    if (libroSeleccionado3.isPresent()){
+                                        System.out.println("-------------------- Libro -------------------->>");
+                                        System.out.println("Titulo: " + libroSeleccionado3.get().getTitulo());
+                                        System.out.println("Autor: " + libroSeleccionado3.get().getAutores().get(0).getNombre());
+                                        System.out.println("                 "+libroSeleccionado3.get().getAutores().get(0).getanioNacimiento()+" - "+libroSeleccionado3.get().getAutores().get(0).getanioMuerte());
+                                        System.out.println("----------------------------------------------->>");
+                                        System.out.println("Aca va el método registrar libro");
+                                        System.out.println("             >> Registrado >>");
+                                        System.out.println("");
+                                        opcion3 = 0;
+                                    } else {
+                                        msg = "> Opción inválida, prueve de nuevo <";
+                                        msg2 = "  > " + nroLibros + " Libros encontrados < ";
+                                    }
 
                             }
 
