@@ -17,17 +17,17 @@ public class Autor {
     private String nombre;
     
     @JsonProperty("birth_year")
-    private String anioNacimiento;
+    private Integer anioNacimiento;
     
     @JsonProperty("death_year")
-    private String anioMuerte;
+    private Integer anioMuerte;
     
     @ManyToMany(mappedBy = "autores", fetch = FetchType.EAGER)
     private List<Libro> libros;
 
     public Autor(){}
 
-    public Autor(String nombre, String anioNacimiento, String anioMuerte) {
+    public Autor(String nombre, Integer anioNacimiento, Integer anioMuerte) {
         this.nombre = nombre;
         this.anioNacimiento = anioNacimiento;
         this.anioMuerte = anioMuerte;
@@ -41,28 +41,26 @@ public class Autor {
         this.nombre = nombre;
     }
 
-    public String getanioNacimiento() {
+    public Integer getanioNacimiento() {
         return anioNacimiento;
     }
 
-    public void setanioNacimiento(String anioNacimiento) {
+    public void setanioNacimiento(Integer anioNacimiento) {
         this.anioNacimiento = anioNacimiento;
     }
 
-    public String getanioMuerte() {
+    public Integer getanioMuerte() {
         return anioMuerte;
     }
 
-    public void setanioMuerte(String anioMuerte) {
+    public void setanioMuerte(Integer anioMuerte) {
         this.anioMuerte = anioMuerte;
     }
 
     @Override
     public String toString() {
-        return "Autor{" +
-                "nombre='" + nombre + '\'' +
-                ", anioNacimiento='" + anioNacimiento + '\'' +
-                ", anioMuerte='" + anioMuerte + '\'' +
-                '}';
+        return "Autor: " + nombre +
+                ", Año Nacimiento: " + anioNacimiento +
+                ", Año Muerte: " + anioMuerte;
     }
 }

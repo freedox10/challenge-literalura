@@ -1,5 +1,5 @@
 package com.aluracursos.literalura.service;
 
 public interface IConvierteDatos {
-    <T> T obtenerDatos(String json, Class<T> clase);
+    <T> T convertirDatos(String json, Class<T> clase);
 }

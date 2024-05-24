@@ -75,7 +75,6 @@ public class BuscarResultadosAPI {
                                 case 0:
                                     break;
                                 default:
-                                    System.out.println("> Opción inválida <");
                                     msg = "> Opción inválida, prueve de nuevo <";
                             }
 
@@ -182,16 +181,18 @@ public class BuscarResultadosAPI {
         var json = consumoApi.obtenerDatosAPI(url);
         //System.out.println("json: " + json);
 
-        DatosResultados datos = conversor.obtenerDatos(json, DatosResultados.class);
-        //System.out.println("datos completos: " + datos);
+        DatosResultados datos = conversor.convertirDatos(json, DatosResultados.class);
+        System.out.println("datos completos: " + datos);
 
         Resultados resultado = new Resultados(datos);
-        System.out.println("resultado raíz Resultados: " + resultado);
+        //System.out.println("resultado raíz Resultados: " + resultado);
+
+        //List<DatosLibro> libros2 = datos.resultados();
 
         List<Libro> libros = resultado.getResultados().stream()
                 .map(l->new Libro(l.idGut(), l.titulo(), l.autores(), l.idiomas(), l.cantidadBajadas()))
                 .toList();
-        System.out.println("ListaPrueba List<Libro>: " + libros);
+        //System.out.println("ListaPrueba List<Libro>: " + libros);
 
         return new ContenedorResultados(resultado, libros);
 
@@ -207,10 +208,6 @@ public class BuscarResultadosAPI {
         //for (Libro librosPasados : librosPasados) {
         //    System.out.println(librosPasados);
         //}
-
-    }
-
-    private void registrarLibro(){
 
     }
 
