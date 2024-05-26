@@ -70,13 +70,13 @@ public class BuscarResultadosAPI {
                             switch (opcion2) {
                                 case 1:
                                     Libro libroSeleccionado = libros.get(0);
-                                    operacionesDB.registrarLibro(libroSeleccionado);
                                     System.out.println("-------------------- Libro -------------------->>");
                                     System.out.println("Titulo: " + libroSeleccionado.getTitulo());
                                     System.out.println("Autor: " + libroSeleccionado.getAutores().get(0).getNombre());
-                                    System.out.println("                 "+libroSeleccionado.getAutores().get(0).getanioNacimiento()+" - "+libroSeleccionado.getAutores().get(0).getanioMuerte());
+                                    System.out.println("                  "+libroSeleccionado.getAutores().get(0).getanioNacimiento()+" - "+libroSeleccionado.getAutores().get(0).getanioMuerte());
                                     System.out.println("----------------------------------------------->>");
-                                    System.out.println("             >> Registrado >>");
+                                    operacionesDB.registrarLibro(libroSeleccionado);
+                                    System.out.println("               >> Registrado >>");
                                     System.out.println("");
                                     opcion2 = 0;
                                     break;
@@ -168,10 +168,10 @@ public class BuscarResultadosAPI {
                                     System.out.println("-------------------- Libro -------------------->>");
                                     System.out.println("Titulo: " + libroSeleccionado2.getTitulo());
                                     System.out.println("Autor: " + libroSeleccionado2.getAutores().get(0).getNombre());
-                                    System.out.println("                 "+libroSeleccionado2.getAutores().get(0).getanioNacimiento()+" - "+libroSeleccionado2.getAutores().get(0).getanioMuerte());
+                                    System.out.println("                  "+libroSeleccionado2.getAutores().get(0).getanioNacimiento()+" - "+libroSeleccionado2.getAutores().get(0).getanioMuerte());
                                     System.out.println("----------------------------------------------->>");
                                     System.out.println("Aca va el método registrar libro");
-                                    System.out.println("             >> Registrado >>");
+                                    System.out.println("               >> Registrado >>");
                                     System.out.println("");
                                     opcion3 = 0;
                                     break;
@@ -188,10 +188,10 @@ public class BuscarResultadosAPI {
                                         System.out.println("-------------------- Libro -------------------->>");
                                         System.out.println("Titulo: " + libroSeleccionado3.get().getTitulo());
                                         System.out.println("Autor: " + libroSeleccionado3.get().getAutores().get(0).getNombre());
-                                        System.out.println("                 "+libroSeleccionado3.get().getAutores().get(0).getanioNacimiento()+" - "+libroSeleccionado3.get().getAutores().get(0).getanioMuerte());
+                                        System.out.println("                  "+libroSeleccionado3.get().getAutores().get(0).getanioNacimiento()+" - "+libroSeleccionado3.get().getAutores().get(0).getanioMuerte());
                                         System.out.println("----------------------------------------------->>");
                                         System.out.println("Aca va el método registrar libro");
-                                        System.out.println("             >> Registrado >>");
+                                        System.out.println("               >> Registrado >>");
                                         System.out.println("");
                                         opcion3 = 0;
                                     } else {

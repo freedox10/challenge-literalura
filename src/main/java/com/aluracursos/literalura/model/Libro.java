@@ -12,27 +12,17 @@ public class Libro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @JsonProperty("id")
+    //@JsonProperty("id")
     private Integer idGut;
-
-    @JsonProperty("title")
+    //@JsonProperty("title")
     private String titulo;
-
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "libro_autores",
-            joinColumns = @JoinColumn(name = "libro_id"),
-            inverseJoinColumns = @JoinColumn(name = "autor_id")
-    )
-    @JsonProperty("authors")
+    @OneToMany(mappedBy = "libro", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    //@JsonProperty("authors")
     private List<Autor> autores;
-
     @ElementCollection
-    @JsonProperty("languages")
+    //@JsonProperty("languages")
     private List<String> idiomas;
-
-    @JsonProperty("download_count")
+    //@JsonProperty("download_count")
     private Integer cantidadBajadas;
 
     public Libro() {

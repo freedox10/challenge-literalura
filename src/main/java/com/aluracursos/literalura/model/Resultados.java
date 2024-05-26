@@ -7,17 +7,24 @@ import java.util.List;
 
 public class Resultados {
 
-    @JsonProperty
+    //@JsonProperty
     private Integer cantidad;
-    @JsonProperty
+    //@JsonProperty
     private String proximo;
-    @JsonProperty
+    //@JsonProperty
     private String anterior;
-    @JsonProperty
+    //@JsonProperty
     private List<DatosLibro> resultados;
 
 
     public Resultados() {
+    }
+
+    public Resultados(Integer cantidad, String proximo, String anterior, List<DatosLibro> resultados) {
+        this.cantidad = cantidad;
+        this.proximo = proximo;
+        this.anterior = anterior;
+        this.resultados = resultados;
     }
 
     public Resultados(DatosResultados datosResultados) {

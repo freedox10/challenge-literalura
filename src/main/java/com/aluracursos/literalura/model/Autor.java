@@ -11,19 +11,14 @@ public class Autor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    
     @JsonProperty("name")
     private String nombre;
-    
     @JsonProperty("birth_year")
     private Integer anioNacimiento;
-    
     @JsonProperty("death_year")
     private Integer anioMuerte;
-    
-    @ManyToMany(mappedBy = "autores", fetch = FetchType.EAGER)
-    private List<Libro> libros;
+    @ManyToOne
+    private Libro libro;
 
     public Autor(){}
 
@@ -31,6 +26,20 @@ public class Autor {
         this.nombre = nombre;
         this.anioNacimiento = anioNacimiento;
         this.anioMuerte = anioMuerte;
+    }
+
+    public Autor(DatosAutor datosAutor) {
+        this.nombre = datosAutor.nombre();
+        this.anioNacimiento = datosAutor.anioNacimiento();
+        this.anioMuerte = datosAutor.anioMuerte();
+    }
+
+    public Libro getLibro() {
+        return libro;
+    }
+
+    public void setLibro(Libro libro) {
+        this.libro = libro;
     }
 
     public String getNombre() {

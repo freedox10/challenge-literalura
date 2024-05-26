@@ -32,8 +32,9 @@ public class OperacionesDB {
 
 
     public void registrarLibro(Libro libroSeleccionado){
-        Optional<Libro> libroEnDB = repositorioLibro.findByIdGutContains(libroSeleccionado.getIdGut());
-        System.out.println("libroEnDB"+libroEnDB);
+
+//        Optional<Libro> libroEnDB = repositorioLibro.findByIdGutContains(libroSeleccionado.getIdGut());
+//        System.out.println("libroEnDB"+libroEnDB);
     }
 
 }
