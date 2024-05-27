@@ -3,7 +3,6 @@ package com.aluracursos.literalura.principal;
 
 import com.aluracursos.literalura.model.Libro;
 import com.aluracursos.literalura.repository.LibroRepository;
-import com.aluracursos.literalura.service.OperarEnDB;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Comparator;
@@ -14,12 +13,19 @@ public class Principal {
     // Instanciar un objeto Scanner
     private final Scanner teclado = new Scanner(System.in);
     // Instanciar un objeto ContenedorResultados
+    @Autowired
     private final BuscarResultadosAPI buscarResultadosAPI = new BuscarResultadosAPI();
-    private OperarEnDB operarEnDB = new OperarEnDB();
     @Autowired
     private LibroRepository repoLibro;
     private List<Libro> libros;
+    private Libro libro;
 
+    public Principal() {
+    }
+
+    public Principal(LibroRepository repoLibro) {
+        this.repoLibro = repoLibro;
+    }
 
     public void muestraElMenu() {
         String msg = "> Ingrese una opción <";
@@ -44,13 +50,8 @@ public class Principal {
 
                 switch (opcion) {
                     case -2:
-                        libros = repoLibro.findAll();
-                        libros.stream()
-                                .sorted(Comparator.comparing(Libro::getIdGut))
-                                .forEach(System.out::println);
-
-                        //List<Libro> librosEnDB = repoLibro.findAll();
-                        //System.out.println("librosEnDB: "+librosEnDB);
+                        mostrarLibrosDB();
+                        break;
                     case 1:
                         buscarResultadosAPI.buscarResultados();
                         msg = "> Ingrese una opción <";
@@ -76,6 +77,19 @@ public class Principal {
             }
 
         }
+
+    }
+
+    public void mostrarLibrosDB() {
+        libros = repoLibro.findAll();
+        libros.stream()
+                .sorted(Comparator.comparing(Libro::getIdGut))
+                .forEach(System.out::println);
+    }
+
+    public void registrarLibroDB(Libro libro) {
+        System.out.println("registrarLibroDB"+libro);
+        //repoLibro.save(libro);
 
     }
 
