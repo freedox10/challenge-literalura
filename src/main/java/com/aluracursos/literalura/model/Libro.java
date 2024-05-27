@@ -19,7 +19,7 @@ public class Libro {
     @OneToMany(mappedBy = "libro", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     //@JsonProperty("authors")
     private List<Autor> autores;
-    @ElementCollection
+    //@ElementCollection
     //@JsonProperty("languages")
     private List<String> idiomas;
     //@JsonProperty("download_count")

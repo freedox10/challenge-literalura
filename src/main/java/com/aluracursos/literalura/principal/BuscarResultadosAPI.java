@@ -3,7 +3,6 @@ package com.aluracursos.literalura.principal;
 import com.aluracursos.literalura.model.*;
 import com.aluracursos.literalura.service.ConsumoAPI;
 import com.aluracursos.literalura.service.ConvierteDatos;
-import com.aluracursos.literalura.service.OperacionesDB;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,7 +14,7 @@ public class BuscarResultadosAPI {
     private final ConsumoAPI consumoApi = new ConsumoAPI();
     // Instanciar un objeto ConvierteDatos
     private final ConvierteDatos conversor = new ConvierteDatos();
-    private final OperacionesDB operacionesDB = new OperacionesDB();
+    //private final OperacionesDB operacionesDB = new OperacionesDB();
 
     public void buscarResultados() {
         System.out.println("> Escribe el Título y/o el Autor del Libro <");
@@ -75,7 +74,7 @@ public class BuscarResultadosAPI {
                                     System.out.println("Autor: " + libroSeleccionado.getAutores().get(0).getNombre());
                                     System.out.println("                  "+libroSeleccionado.getAutores().get(0).getanioNacimiento()+" - "+libroSeleccionado.getAutores().get(0).getanioMuerte());
                                     System.out.println("----------------------------------------------->>");
-                                    operacionesDB.registrarLibro(libroSeleccionado);
+                                    //operacionesDB.registrarLibro(libroSeleccionado);
                                     System.out.println("               >> Registrado >>");
                                     System.out.println("");
                                     opcion2 = 0;
