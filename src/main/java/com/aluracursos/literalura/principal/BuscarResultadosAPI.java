@@ -6,6 +6,7 @@ import com.aluracursos.literalura.service.ConsumoAPI;
 import com.aluracursos.literalura.service.ConvierteDatos;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
@@ -38,7 +39,8 @@ public class BuscarResultadosAPI {
         this.principal = principal;
     }
 
-    public void buscarResultados() {
+    public Libro buscarResultados() {
+        Libro libroSeleccionado = null;
         System.out.println("> Escribe el Título y/o el Autor del Libro <");
         var busqueda = teclado.nextLine();
         //System.out.println(busqueda);
@@ -68,6 +70,7 @@ public class BuscarResultadosAPI {
                                     -  Libro no encontrado  -
                         ----------------------------------------------->>""";
                     System.out.println(menu_1_0);
+                    libroSeleccionado = libros.get(0);
                     break;
 
                 case 1:
@@ -90,13 +93,13 @@ public class BuscarResultadosAPI {
 
                             switch (opcion2) {
                                 case 1:
-                                    Libro libroSeleccionado = libros.get(0);
+                                    libroSeleccionado = libros.get(0);
                                     System.out.println("-------------------- Libro -------------------->>");
                                     System.out.println("Titulo: " + libroSeleccionado.getTitulo());
                                     System.out.println("Autor: " + libroSeleccionado.getAutores().get(0).getNombre());
                                     System.out.println("                  "+libroSeleccionado.getAutores().get(0).getanioNacimiento()+" - "+libroSeleccionado.getAutores().get(0).getanioMuerte());
                                     System.out.println("----------------------------------------------->>");
-                                    principal.registrarLibroDB(libroSeleccionado);
+                                    //registrarLibroDB(libros);
                                     System.out.println("               >> Registrado >>");
                                     System.out.println("");
                                     opcion2 = 0;
@@ -231,7 +234,7 @@ public class BuscarResultadosAPI {
 
 
             }
-
+        return libroSeleccionado;
     }
 
     private ContenedorResultados getResultados(String url){
@@ -268,5 +271,19 @@ public class BuscarResultadosAPI {
         //}
 
     }
+
+//    private void registrarLibroDB(List<Libro>  libros) {
+//        var libro = libros.get(0);
+//        System.out.println("registrarLibroDB"+libro);
+//        repoLibro.save(libro);
+//
+//    }
+//
+//    private void mostrarLibrosDB() {
+//        libros = repoLibro.findAll();
+//        libros.stream()
+//                .sorted(Comparator.comparing(Libro::getIdGut))
+//                .forEach(System.out::println);
+//    }
 
 }

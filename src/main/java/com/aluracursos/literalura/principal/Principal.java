@@ -28,6 +28,7 @@ public class Principal {
     }
 
     public void muestraElMenu() {
+        Libro libroEncontrado;
         String msg = "> Ingrese una opción <";
         var palabra = "";
         var opcion = -1;
@@ -53,7 +54,11 @@ public class Principal {
                         mostrarLibrosDB();
                         break;
                     case 1:
-                        buscarResultadosAPI.buscarResultados();
+                        libroEncontrado = buscarResultadosAPI.buscarResultados();
+                        if (libroEncontrado != null){
+                            registrarLibroDB(libroEncontrado);
+                            System.out.println("registrado");
+                        }
                         msg = "> Ingrese una opción <";
                         break;
                     case 0:
@@ -80,16 +85,16 @@ public class Principal {
 
     }
 
-    public void mostrarLibrosDB() {
+    private void mostrarLibrosDB() {
         libros = repoLibro.findAll();
         libros.stream()
                 .sorted(Comparator.comparing(Libro::getIdGut))
                 .forEach(System.out::println);
     }
 
-    public void registrarLibroDB(Libro libro) {
+    private void registrarLibroDB(Libro libro) {
         System.out.println("registrarLibroDB"+libro);
-        //repoLibro.save(libro);
+        repoLibro.save(libro);
 
     }
 
