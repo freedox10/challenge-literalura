@@ -21,7 +21,6 @@ public class LiteraluraApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		// Instanciar un objeto Principal
 		Principal principal = new Principal(libroRepository);
-		BuscarResultadosAPI buscarResultadosAPI = new BuscarResultadosAPI(libroRepository);
 		principal.muestraElMenu();
 
 	}

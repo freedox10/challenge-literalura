@@ -18,26 +18,21 @@ public class BuscarResultadosAPI {
     // Instanciar un objeto ConvierteDatos
     private final ConvierteDatos conversor = new ConvierteDatos();
     private Libro libro;
-    private List<Libro> libros;
-    @Autowired
-    private Principal principal;
-    @Autowired
-    private LibroRepository repoLibro;
+//    @Autowired
+//    private Principal principal;
+//    @Autowired
+//    private LibroRepository repoLibro;
 
     public BuscarResultadosAPI() {
     }
 
-    public BuscarResultadosAPI(LibroRepository repoLibro) {
-        this.repoLibro = repoLibro;
-    }
+//    public BuscarResultadosAPI(LibroRepository repoLibro) {
+//        this.repoLibro = repoLibro;
+//    }
 
-    public BuscarResultadosAPI(Libro libro) {
-        this.libro = libro;
-    }
-
-    public BuscarResultadosAPI(Principal principal) {
-        this.principal = principal;
-    }
+//    public BuscarResultadosAPI(Principal principal) {
+//        this.principal = principal;
+//    }
 
     public Libro buscarResultados() {
         Libro libroSeleccionado = null;
@@ -70,7 +65,7 @@ public class BuscarResultadosAPI {
                                     -  Libro no encontrado  -
                         ----------------------------------------------->>""";
                     System.out.println(menu_1_0);
-                    libroSeleccionado = libros.get(0);
+                    //libroSeleccionado = libros.get(0);
                     break;
 
                 case 1:
@@ -94,14 +89,6 @@ public class BuscarResultadosAPI {
                             switch (opcion2) {
                                 case 1:
                                     libroSeleccionado = libros.get(0);
-                                    System.out.println("-------------------- Libro -------------------->>");
-                                    System.out.println("Titulo: " + libroSeleccionado.getTitulo());
-                                    System.out.println("Autor: " + libroSeleccionado.getAutores().get(0).getNombre());
-                                    System.out.println("                  "+libroSeleccionado.getAutores().get(0).getanioNacimiento()+" - "+libroSeleccionado.getAutores().get(0).getanioMuerte());
-                                    System.out.println("----------------------------------------------->>");
-                                    //registrarLibroDB(libros);
-                                    System.out.println("               >> Registrado >>");
-                                    System.out.println("");
                                     opcion2 = 0;
                                     break;
                                 case 2:
@@ -147,9 +134,6 @@ public class BuscarResultadosAPI {
                             opcion3 = Integer.parseInt(palabra3);
 
                             switch (opcion3) {
-                                case -2:
-                                    System.out.println("* metodo para escribir id y registrar libro");
-                                    break;
                                 case 1:
                                     if (resultado.getAnterior() != null){
                                         System.out.println("_= listando 32 libros menos =_");
@@ -162,8 +146,10 @@ public class BuscarResultadosAPI {
                                         imprimeLibros(libros);
                                         pagina--;
                                         msg2 = "  > " + nroLibros + " Libros encontrados < " + librosPorPagina + " mostrados > página " + pagina + " <";
+                                        msg = "> Ingrese una opción <";
                                     } else {
                                         msg2 = "  > " + nroLibros + " Libros encontrados < ";
+                                        msg = "> Ingrese una opción <";
                                     }
                                     break;
                                 case 2:
@@ -178,8 +164,10 @@ public class BuscarResultadosAPI {
                                         imprimeLibros(libros);
                                         pagina++;
                                         msg2 = "  > " + nroLibros + " Libros encontrados < " + librosPorPagina + " mostrados > página " + pagina + " <";
+                                        msg = "> Ingrese una opción <";
                                     } else {
                                         msg2 = "  > " + nroLibros + " Libros encontrados < ";
+                                        msg = "> Ingrese una opción <";
                                     }
                                     break;
                                 case 3:
@@ -188,35 +176,18 @@ public class BuscarResultadosAPI {
                                     msg2 = "  > " + nroLibros + " Libros encontrados < " + librosPorPagina + " mostrados > página " + pagina + " <";
                                     break;
                                 case 4:
-                                    Libro libroSeleccionado2 = libros.get(0);
-                                    System.out.println("-------------------- Libro -------------------->>");
-                                    System.out.println("Titulo: " + libroSeleccionado2.getTitulo());
-                                    System.out.println("Autor: " + libroSeleccionado2.getAutores().get(0).getNombre());
-                                    System.out.println("                  "+libroSeleccionado2.getAutores().get(0).getanioNacimiento()+" - "+libroSeleccionado2.getAutores().get(0).getanioMuerte());
-                                    System.out.println("----------------------------------------------->>");
-                                    System.out.println("Aca va el método registrar libro");
-                                    System.out.println("               >> Registrado >>");
-                                    System.out.println("");
+                                    libroSeleccionado = libros.get(0);
                                     opcion3 = 0;
                                     break;
                                 case 0:
-
                                     break;
                                 default:
-
                                     int finalOpcion = opcion3;
                                     Optional<Libro> libroSeleccionado3 = libros.stream()
                                             .filter(l -> l.getIdGut().equals(finalOpcion))
                                             .findFirst();
                                     if (libroSeleccionado3.isPresent()){
-                                        System.out.println("-------------------- Libro -------------------->>");
-                                        System.out.println("Titulo: " + libroSeleccionado3.get().getTitulo());
-                                        System.out.println("Autor: " + libroSeleccionado3.get().getAutores().get(0).getNombre());
-                                        System.out.println("                  "+libroSeleccionado3.get().getAutores().get(0).getanioNacimiento()+" - "+libroSeleccionado3.get().getAutores().get(0).getanioMuerte());
-                                        System.out.println("----------------------------------------------->>");
-                                        System.out.println("Aca va el método registrar libro");
-                                        System.out.println("               >> Registrado >>");
-                                        System.out.println("");
+                                        libroSeleccionado = libroSeleccionado3.get();//
                                         opcion3 = 0;
                                     } else {
                                         msg = "> Opción inválida, prueve de nuevo <";
@@ -260,7 +231,7 @@ public class BuscarResultadosAPI {
     }
 
     private void imprimeLibros(List<Libro> librosPasados){
-
+        System.out.println();
         librosPasados.forEach(System.out::println);
 
         //for (int i = 0; i < librosPasados.size(); i++) {
@@ -271,19 +242,5 @@ public class BuscarResultadosAPI {
         //}
 
     }
-
-//    private void registrarLibroDB(List<Libro>  libros) {
-//        var libro = libros.get(0);
-//        System.out.println("registrarLibroDB"+libro);
-//        repoLibro.save(libro);
-//
-//    }
-//
-//    private void mostrarLibrosDB() {
-//        libros = repoLibro.findAll();
-//        libros.stream()
-//                .sorted(Comparator.comparing(Libro::getIdGut))
-//                .forEach(System.out::println);
-//    }
 
 }

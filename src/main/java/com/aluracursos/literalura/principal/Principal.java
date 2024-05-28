@@ -18,10 +18,10 @@ public class Principal {
     @Autowired
     private LibroRepository repoLibro;
     private List<Libro> libros;
-    private Libro libro;
+    //private Libro libro;
 
-    public Principal() {
-    }
+//    public Principal() {
+//    }
 
     public Principal(LibroRepository repoLibro) {
         this.repoLibro = repoLibro;
@@ -51,14 +51,24 @@ public class Principal {
 
                 switch (opcion) {
                     case -2:
-                        mostrarLibrosDB();
+
                         break;
                     case 1:
                         libroEncontrado = buscarResultadosAPI.buscarResultados();
                         if (libroEncontrado != null){
                             registrarLibroDB(libroEncontrado);
-                            System.out.println("registrado");
+                            System.out.println("-------------------- Libro --------------------<<");
+                            System.out.println("Titulo: " + libroEncontrado.getTitulo());
+                            System.out.println("Autor: " + libroEncontrado.getAutores().get(0).getNombre());
+                            System.out.println("                  "+libroEncontrado.getAutores().get(0).getanioNacimiento()+" - "+libroEncontrado.getAutores().get(0).getanioMuerte());
+                            System.out.println("-----------------------------------------------<<");
+                            System.out.println("               << Registrado <<");
+                            System.out.println("");
                         }
+                        msg = "> Ingrese una opción <";
+                        break;
+                    case 2:
+                        mostrarLibrosDB();
                         msg = "> Ingrese una opción <";
                         break;
                     case 0:
@@ -88,13 +98,17 @@ public class Principal {
     private void mostrarLibrosDB() {
         libros = repoLibro.findAll();
         libros.stream()
-                .sorted(Comparator.comparing(Libro::getIdGut))
+                .sorted(Comparator.comparing(Libro::getTitulo))
                 .forEach(System.out::println);
     }
 
     private void registrarLibroDB(Libro libro) {
         System.out.println("registrarLibroDB"+libro);
         repoLibro.save(libro);
+
+    }
+
+    private  void mostrarAutoresDB(){
 
     }
 
