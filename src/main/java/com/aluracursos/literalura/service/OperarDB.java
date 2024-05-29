@@ -23,21 +23,9 @@ public class OperarDB {
     public void registrarLibroDB(Libro libro) {
         Libro nuevoLibro;
         Libro libroDescubierto = repoLibro.buscarLibroPorIdGut(libro.getIdGut());
-        System.out.println("libroDescubierto: "+libroDescubierto);
-        //Optional<Libro> libroDescubierto = repoLibro.findById(libro.getIdGut().longValue());
-        //if (libroDescubierto.isEmpty()){
+        //System.out.println("libroDescubierto: "+libroDescubierto);
+
         if (libroDescubierto == null){
-//            List<Autor> autoresVerificados = verificarAutores(libro.getAutores());
-//            System.out.println("autoresVerificados: "+autoresVerificados);
-//            Libro nuevoLibro = new Libro(libro.getIdGut(), libro.getTitulo(), libro.getIdiomas(), libro.getCantidadBajadas());
-//            nuevoLibro.setAutores(autoresVerificados);
-//            for (Autor autor : autoresVerificados){
-//                if (autor.getId() == null){
-//                    nuevoLibro.agregarAutor(autor);
-//                } else {
-//                    nuevoLibro.agregarAutor(autor);
-//                }
-//            }
 
             nuevoLibro = libro;
             System.out.println("nuevoLibro: "+nuevoLibro);
@@ -84,7 +72,27 @@ public class OperarDB {
     }
 
     public void mostrarAutoresDB(){
+        var autores = repoAutor.findAll();
+        System.out.println();
+        autores.forEach(System.out::println);
+        System.out.println("<<---------------------------------------------<<");
+        System.out.println();
+    }
 
+    public void mostrarAutoresVivosDB(int anio) {
+        List<Autor> autores = repoAutor.encontrarAutoresVivos(anio);
+        System.out.println();
+        autores.forEach(System.out::println);
+        System.out.println("<<---------------------------------------------<<");
+        System.out.println();
+    }
+
+    public void mostrarLibrosPorIdioma(String idioma) {
+        List<Libro> libros = repoLibro.buscarLibrosPorIdioma(idioma);
+        System.out.println();
+        libros.forEach(System.out::println);
+        System.out.println("<<---------------------------------------------<<");
+        System.out.println();
     }
 
 }

@@ -72,10 +72,13 @@ public class Principal {
                         msg = "> Ingrese una opción <";
                         break;
                     case 3:
+                        serviciosDB.mostrarAutoresDB();
                         break;
                     case 4:
+                        listarAutoresVivos();
                         break;
                     case 5:
+                        listarLibroPorIdioma();
                         break;
                     case 0:
                         var salida = """
@@ -109,32 +112,19 @@ public class Principal {
 
     }
 
-    private void registrarLibroDB(Libro libro) {
-        Optional<Libro> libroDescubierto = repoLibro.findById(libro.getIdGut().longValue());
-        System.out.println("libroDescubierto: "+libroDescubierto);
-        if (libroDescubierto.isEmpty()){
-
-        }
-        //System.out.println("registrarLibroDB"+libro);
-        repoLibro.save(libro);
-
+    private void listarAutoresVivos() {
+        System.out.println("Ingresa el año desde el que deseas encontrar autores vivos");
+        int anio = Integer.parseInt(teclado.nextLine());
+        System.out.println("----------------------------------------------->>");
+        serviciosDB.mostrarAutoresVivosDB(anio);
     }
 
-    private void verificarAutores(List<Autor> autores){
-        for (Autor autorX : autores){
-            //Autor autor = repoAutor.
-        }
-    }
-
-    private void mostrarLibrosDB() {
-        libros = repoLibro.findAll();
-        libros.stream()
-                .sorted(Comparator.comparing(Libro::getTitulo))
-                .forEach(System.out::println);
-    }
-
-    private  void mostrarAutoresDB(){
-
+    private void listarLibroPorIdioma() {
+        System.out.println("Ingresa el idioma de los libros que desea listar");
+        System.out.println("es - Español     en - Inglés\nfr - Francés     pt - Portugués\nde - Alemán     fi - Finlandes");
+        String lenguaje = teclado.nextLine().toLowerCase();
+        System.out.println("----------------------------------------------->>");
+        serviciosDB.mostrarLibrosPorIdioma(lenguaje);
     }
 
 }

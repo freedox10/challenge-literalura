@@ -51,7 +51,6 @@ public class BuscarResultadosAPI {
             switch (nroLibros) {
                 case 0:
                     var menu_1_0 = """
-                        ----------------------------------------------->>
                                     -  Libro no encontrado  -
                         ----------------------------------------------->>""";
                     System.out.println(menu_1_0);
