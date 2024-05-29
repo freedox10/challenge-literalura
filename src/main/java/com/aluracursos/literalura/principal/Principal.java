@@ -1,31 +1,41 @@
 package com.aluracursos.literalura.principal;
 
 
+import com.aluracursos.literalura.model.Autor;
 import com.aluracursos.literalura.model.Libro;
+import com.aluracursos.literalura.repository.AutorRepository;
 import com.aluracursos.literalura.repository.LibroRepository;
+import com.aluracursos.literalura.service.OperarDB;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class Principal {
     // Instanciar un objeto Scanner
     private final Scanner teclado = new Scanner(System.in);
-    // Instanciar un objeto ContenedorResultados
     @Autowired
     private final BuscarResultadosAPI buscarResultadosAPI = new BuscarResultadosAPI();
     @Autowired
+    private OperarDB serviciosDB;
+    @Autowired
     private LibroRepository repoLibro;
+    @Autowired
+    private AutorRepository repoAutor;
     private List<Libro> libros;
-    //private Libro libro;
 
-//    public Principal() {
-//    }
-
-    public Principal(LibroRepository repoLibro) {
-        this.repoLibro = repoLibro;
+    public Principal() {
     }
+
+    public Principal(OperarDB serviciosDB) {
+        this.serviciosDB = serviciosDB;
+    }
+
+    //    public Principal(LibroRepository repoLibro) {
+//        this.repoLibro = repoLibro;
+//    }
 
     public void muestraElMenu() {
         Libro libroEncontrado;
@@ -54,22 +64,18 @@ public class Principal {
 
                         break;
                     case 1:
-                        libroEncontrado = buscarResultadosAPI.buscarResultados();
-                        if (libroEncontrado != null){
-                            registrarLibroDB(libroEncontrado);
-                            System.out.println("-------------------- Libro --------------------<<");
-                            System.out.println("Titulo: " + libroEncontrado.getTitulo());
-                            System.out.println("Autor: " + libroEncontrado.getAutores().get(0).getNombre());
-                            System.out.println("                  "+libroEncontrado.getAutores().get(0).getanioNacimiento()+" - "+libroEncontrado.getAutores().get(0).getanioMuerte());
-                            System.out.println("-----------------------------------------------<<");
-                            System.out.println("               << Registrado <<");
-                            System.out.println("");
-                        }
+                        buscarLibro();
                         msg = "> Ingrese una opción <";
                         break;
                     case 2:
-                        mostrarLibrosDB();
+                        serviciosDB.mostrarLibrosDB();
                         msg = "> Ingrese una opción <";
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                    case 5:
                         break;
                     case 0:
                         var salida = """
@@ -95,17 +101,36 @@ public class Principal {
 
     }
 
+    private void buscarLibro(){
+        var libroEncontrado = buscarResultadosAPI.buscarResultados();
+        if (libroEncontrado != null){
+            serviciosDB.registrarLibroDB(libroEncontrado);
+        }
+
+    }
+
+    private void registrarLibroDB(Libro libro) {
+        Optional<Libro> libroDescubierto = repoLibro.findById(libro.getIdGut().longValue());
+        System.out.println("libroDescubierto: "+libroDescubierto);
+        if (libroDescubierto.isEmpty()){
+
+        }
+        //System.out.println("registrarLibroDB"+libro);
+        repoLibro.save(libro);
+
+    }
+
+    private void verificarAutores(List<Autor> autores){
+        for (Autor autorX : autores){
+            //Autor autor = repoAutor.
+        }
+    }
+
     private void mostrarLibrosDB() {
         libros = repoLibro.findAll();
         libros.stream()
                 .sorted(Comparator.comparing(Libro::getTitulo))
                 .forEach(System.out::println);
-    }
-
-    private void registrarLibroDB(Libro libro) {
-        System.out.println("registrarLibroDB"+libro);
-        repoLibro.save(libro);
-
     }
 
     private  void mostrarAutoresDB(){

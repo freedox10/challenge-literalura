@@ -44,9 +44,14 @@ public class Libro {
         this.cantidadBajadas = datosLibro.cantidadBajadas();
     }
 
-    public Integer getIdGut() {
-        return idGut;
+    public Libro(Integer idGut, String titulo, List<String> idiomas, Integer cantidadBajadas) {
+        this.idGut = idGut;
+        this.titulo = titulo;
+        this.idiomas = idiomas;
+        this.cantidadBajadas = cantidadBajadas;
     }
+
+    public Integer getIdGut() { return idGut; }
 
     public void setIdGut(Integer idGut) {
         this.idGut = idGut;
@@ -67,6 +72,10 @@ public class Libro {
     public void setAutores(List<Autor> autores) {
         this.autores = autores;
     }
+
+    public void agregarAutor(Autor autor) {
+        this.autores.add(autor);
+    } //Setter modificado para adherir autor a autores.
 
     public List<String> getIdiomas() {
         return idiomas;

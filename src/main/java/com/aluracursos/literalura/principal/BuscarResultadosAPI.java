@@ -17,22 +17,11 @@ public class BuscarResultadosAPI {
     private final ConsumoAPI consumoApi = new ConsumoAPI();
     // Instanciar un objeto ConvierteDatos
     private final ConvierteDatos conversor = new ConvierteDatos();
-    private Libro libro;
-//    @Autowired
-//    private Principal principal;
-//    @Autowired
-//    private LibroRepository repoLibro;
+    //private Libro libro;
+
 
     public BuscarResultadosAPI() {
     }
-
-//    public BuscarResultadosAPI(LibroRepository repoLibro) {
-//        this.repoLibro = repoLibro;
-//    }
-
-//    public BuscarResultadosAPI(Principal principal) {
-//        this.principal = principal;
-//    }
 
     public Libro buscarResultados() {
         Libro libroSeleccionado = null;
@@ -40,10 +29,11 @@ public class BuscarResultadosAPI {
         var busqueda = teclado.nextLine();
         //System.out.println(busqueda);
         String url = "https://gutendex.com/books/?search=" + busqueda.replace(" ", "%20");
+        System.out.println("----------------------------------------------->>");
 
         var resultado = getResultados(url).getInicial();
         var libros = getResultados(url).getPaginado();
-        //System.out.println("var libros"+libros);
+        //System.out.println("libros"+libros);
 
         imprimeLibros(libros);
 
@@ -214,12 +204,11 @@ public class BuscarResultadosAPI {
         //System.out.println("json: " + json);
 
         DatosResultados datos = conversor.convertirDatos(json, DatosResultados.class);
-        System.out.println("datos completos: " + datos);
+        //System.out.println("datos completos: " + datos);
 
         Resultados resultado = new Resultados(datos);
         //System.out.println("resultado raíz Resultados: " + resultado);
 
-        //List<DatosLibro> libros2 = datos.resultados();
 
         List<Libro> libros = resultado.getResultados().stream()
                 .map(l->new Libro(l.idGut(), l.titulo(), l.autores(), l.idiomas(), l.cantidadBajadas()))
