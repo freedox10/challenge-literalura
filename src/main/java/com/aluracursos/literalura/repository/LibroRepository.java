@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
+import java.util.List;
 
 @Repository
 public interface LibroRepository extends JpaRepository<Libro, Long> {
@@ -14,7 +15,10 @@ public interface LibroRepository extends JpaRepository<Libro, Long> {
     @Query("SELECT l FROM Libro l WHERE l.idGut = :idGutB%")
     Libro buscarLibroPorIdGut(Integer idGutB);
 
-    @Query("select p from Libro p where array_contains(p.idiomas, :idiomaBuscado)")
+    @Query("SELECT p FROM Libro p WHERE array_contains(p.idiomas, :idiomaBuscado)")
     Collection<Libro> findAllByIdiomasContaining(@Param("idiomaBuscado") String idiomaBuscado);
+
+    @Query("SELECT b FROM Libro b ORDER BY b.cantidadBajadas DESC LIMIT 10")
+    List<Libro> buscarTop10Libros();
 
 }

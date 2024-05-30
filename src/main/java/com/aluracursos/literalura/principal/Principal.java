@@ -43,6 +43,8 @@ public class Principal {
                      3 - Listar Autores Registrados
                      4 - Listar Autores Vivos en un determinado Año
                      5 - Listar Libros por Idioma
+                     6 - Top 10 Libros mas descargados
+                     7 - Estadísticas varias
                      0 - Salir                        AAF+ONE+Alura
                     ===============================================>>""";
             System.out.println(menu);
@@ -74,6 +76,22 @@ public class Principal {
                     case 5:
                         listarLibroPorIdioma();
                         msg = "> Ingrese una opción <";
+                        break;
+                    case 6:
+                        serviciosDB.mostrarTop10Libros();
+                        msg = "> Ingrese una opción <";
+                        break;
+                    case 7:
+                        serviciosDB.mostrarEstadisticas();
+                        msg = "> Ingrese una opción <";
+                        break;
+                    case 8:
+                        break;
+                    case 9:
+                        break;
+                    case 10:
+                        break;
+                    case 11:
                         break;
                     case 0:
                         var salida = """

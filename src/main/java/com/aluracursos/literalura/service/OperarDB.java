@@ -9,7 +9,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.DoubleSummaryStatistics;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.*;
 
 @Service
 public class OperarDB {
@@ -50,18 +54,6 @@ public class OperarDB {
         }
     }
 
-    public List<Autor> verificarAutores(List<Autor> autores){
-        List<Autor> autoresVerificados = new ArrayList<>();
-        for (Autor autorX : autores){
-            Autor autor = repoAutor.buscarAutor(autorX.getNombre(), autorX.getanioNacimiento(), autorX.getanioMuerte());
-            if (autor == null){
-                autoresVerificados.add(new Autor(autorX.getNombre(), autorX.getanioNacimiento(), autorX.getanioMuerte()));
-            } else {
-                autoresVerificados.add(autor);
-            }
-        }
-        return autoresVerificados;
-    }
 
     public void mostrarLibrosDB() {
         var libros = repoLibro.findAll();
@@ -73,7 +65,18 @@ public class OperarDB {
     public void mostrarAutoresDB(){
         var autores = repoAutor.findAll();
         System.out.println();
-        autores.forEach(System.out::println);
+
+        List<String> listaSinDuplicados = autores.stream()
+                .map(Autor::getNombre)
+                .distinct().toList();
+        listaSinDuplicados.stream()
+                .sorted(Comparator.comparing(String::toString))
+                .forEach(System.out::println);
+
+//        autores.stream()
+//                .sorted(Comparator.comparing(Autor::getNombre))
+//                .forEach(System.out::println);
+        //autores.forEach(System.out::println);
         System.out.println("<<---------------------------------------------<<");
         System.out.println();
     }
@@ -100,6 +103,54 @@ public class OperarDB {
                         >>---------------------------------------------<<""";
             System.out.println(msgIdioma);
         }
+    }
+
+    public void mostrarTop10Libros(){
+        var libros = repoLibro.buscarTop10Libros();
+        System.out.println("libros: "+libros);
+        System.out.println();
+        System.out.println("      >>  Top 10  <<");
+        for (int i = 0; i < libros.size(); i++) {
+            System.out.println((i+1)+"- "+libros.get(i).getCantidadBajadas()+" - "+libros.get(i).getTitulo());
+        }
+        //libros.forEach(System.out::println);
+        System.out.println("<<---------------------------------------------<<");
+        System.out.println();
+    }
+
+    public void mostrarEstadisticas() {
+        List<Libro> libro = repoLibro.findAll();
+
+        ArrayList<Libro> libros2 = new ArrayList<Libro>(libro);
+
+        DoubleSummaryStatistics datos = libros2.stream()
+                .collect(Collectors.summarizingDouble(Libro::getCantidadBajadas));
+
+        System.out.println("        >>  Descarga de Libros  <<" +
+                        "\nMedia: " + String.format("%1.2f", datos.getAverage()) +
+                        "\nMayor: " + datos.getMax() +
+                        "\nMenor: " + datos.getMin() +
+                        "\nTotal: " + datos.getCount() + " libros registrados." +
+                        "\n>>---------------------------------------------<<");
+
+//        //Using Collectors.summarizingInt()
+//        IntSummaryStatistics intSummaryStatistics = employeeList
+//                .stream()
+//                .collect(Collectors.summarizingInt(Employee::getAge));
+//        System.out.println("IntSummaryStatistics for age: " + intSummaryStatistics);
+//
+//        //Using Collectors.summarizingLong()
+//        LongSummaryStatistics longSummaryStatistics = employeeList
+//                .stream()
+//                .collect(Collectors.summarizingLong(Employee::getLeaves));
+//        System.out.println("LongSummaryStatistics for leaves: " + longSummaryStatistics);
+//
+//        //Using Collectors.summarizingDouble()
+//        DoubleSummaryStatistics doubleSummaryStatistics = employeeList
+//                .stream()
+//                .collect(Collectors.summarizingDouble(Employee::getSalary));
+//        System.out.println("DoubleSummaryStatistics for salary: " + doubleSummaryStatistics);
+
     }
 
 }
