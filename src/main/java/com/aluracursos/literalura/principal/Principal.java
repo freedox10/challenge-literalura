@@ -1,16 +1,12 @@
 package com.aluracursos.literalura.principal;
 
-
-import com.aluracursos.literalura.model.Autor;
 import com.aluracursos.literalura.model.Libro;
 import com.aluracursos.literalura.repository.AutorRepository;
 import com.aluracursos.literalura.repository.LibroRepository;
 import com.aluracursos.literalura.service.OperarDB;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 import java.util.Scanner;
 
 public class Principal {
@@ -24,7 +20,7 @@ public class Principal {
     private LibroRepository repoLibro;
     @Autowired
     private AutorRepository repoAutor;
-    private List<Libro> libros;
+    //private List<Libro> libros;
 
     public Principal() {
     }
@@ -32,10 +28,6 @@ public class Principal {
     public Principal(OperarDB serviciosDB) {
         this.serviciosDB = serviciosDB;
     }
-
-    //    public Principal(LibroRepository repoLibro) {
-//        this.repoLibro = repoLibro;
-//    }
 
     public void muestraElMenu() {
         Libro libroEncontrado;
@@ -73,12 +65,15 @@ public class Principal {
                         break;
                     case 3:
                         serviciosDB.mostrarAutoresDB();
+                        msg = "> Ingrese una opción <";
                         break;
                     case 4:
                         listarAutoresVivos();
+                        msg = "> Ingrese una opción <";
                         break;
                     case 5:
                         listarLibroPorIdioma();
+                        msg = "> Ingrese una opción <";
                         break;
                     case 0:
                         var salida = """

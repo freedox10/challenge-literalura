@@ -1,19 +1,13 @@
 package com.aluracursos.literalura.model;
 
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.util.List;
 
 public class Resultados {
 
-    //@JsonProperty
     private Integer cantidad;
-    //@JsonProperty
     private String proximo;
-    //@JsonProperty
     private String anterior;
-    //@JsonProperty
     private List<DatosLibro> resultados;
 
 

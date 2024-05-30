@@ -14,6 +14,5 @@ public class ConvierteDatos implements IConvierteDatos {
             System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
-        //return null;
     }
 }

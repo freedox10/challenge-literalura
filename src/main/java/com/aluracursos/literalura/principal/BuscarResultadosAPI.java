@@ -1,12 +1,9 @@
 package com.aluracursos.literalura.principal;
 
 import com.aluracursos.literalura.model.*;
-import com.aluracursos.literalura.repository.LibroRepository;
 import com.aluracursos.literalura.service.ConsumoAPI;
 import com.aluracursos.literalura.service.ConvierteDatos;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
