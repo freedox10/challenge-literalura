@@ -87,12 +87,20 @@ public class OperarDB {
         System.out.println();
     }
 
-    public void mostrarLibrosPorIdioma(String idioma) {
-        List<Libro> libros = repoLibro.buscarLibrosPorIdioma(idioma);
-        System.out.println();
-        libros.forEach(System.out::println);
-        System.out.println("<<---------------------------------------------<<");
-        System.out.println();
+    public void mostrarLibrosPorIdioma(String idiomaBuscado) {
+        var libros = repoLibro.findAllByIdiomasContaining(idiomaBuscado);
+        //System.out.println("librosO: "+libros);
+        if (!libros.isEmpty()){
+            System.out.println();
+            libros.forEach(System.out::println);
+            System.out.println("<<---------------------------------------------<<");
+            System.out.println();
+        } else {
+            var msgIdioma = """
+                              >  Libro por Idioma, no encontrado  <
+                        >>---------------------------------------------<<""";
+            System.out.println(msgIdioma);
+        }
     }
 
 }

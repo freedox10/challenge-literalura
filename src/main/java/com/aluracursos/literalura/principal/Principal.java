@@ -113,7 +113,7 @@ public class Principal {
     }
 
     private void listarAutoresVivos() {
-        System.out.println("Ingresa el año desde el que deseas encontrar autores vivos");
+        System.out.println("Ingresa año desde el que deseas encontrar autores vivos");
         int anio = Integer.parseInt(teclado.nextLine());
         System.out.println("----------------------------------------------->>");
         serviciosDB.mostrarAutoresVivosDB(anio);
@@ -122,9 +122,22 @@ public class Principal {
     private void listarLibroPorIdioma() {
         System.out.println("Ingresa el idioma de los libros que desea listar");
         System.out.println("es - Español     en - Inglés\nfr - Francés     pt - Portugués\nde - Alemán     fi - Finlandes");
-        String lenguaje = teclado.nextLine().toLowerCase();
-        System.out.println("----------------------------------------------->>");
-        serviciosDB.mostrarLibrosPorIdioma(lenguaje);
+        var loop = "";
+        while(loop!="salir"){
+            String lenguaje = teclado.nextLine().toLowerCase();
+            if (lenguaje.equals("es") | lenguaje.equals("en") | lenguaje.equals("fr")
+                    | lenguaje.equals("pt") | lenguaje.equals("de") | lenguaje.equals("fi")){
+                System.out.println("----------------------------------------------->>");
+                serviciosDB.mostrarLibrosPorIdioma(lenguaje);
+
+                loop = "salir";
+            } else {
+                System.out.println("> Opción inválida, prueve de nuevo <");
+
+            }
+
+        }
+
     }
 
 }

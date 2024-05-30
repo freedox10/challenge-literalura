@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,7 +22,10 @@ public interface LibroRepository extends JpaRepository<Libro, Long> {
 //    //@Query("SELECT DISTINCT b FROM Libro b JOIN b.idiomas l WHERE :idioma IN (l)")
 //    List<Libro> encontrarLibroPorIdioma(String idioma);
 
-    @Query("SELECT l FROM Libro l JOIN l.idiomas idio WHERE idio = :idioma")
-    List<Libro> buscarLibrosPorIdioma(@Param("idioma") String idioma);
+//    @Query("SELECT l FROM Libro l JOIN l.idiomas idio WHERE idio = :idioma")
+//    List<Libro> buscarLibrosPorIdioma(@Param("idioma") String idioma);
+
+    @Query("select p from Libro p where array_contains(p.idiomas, :idiomaBuscado)")
+    Collection<Libro> findAllByIdiomasContaining(@Param("idiomaBuscado") String idiomaBuscado);
 
 }
