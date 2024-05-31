@@ -10,17 +10,11 @@ public class Libro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    //@JsonProperty("id")
     private Integer idGut;
-    //@JsonProperty("title")
     private String titulo;
     @OneToMany(mappedBy = "libro", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    //@JsonProperty("authors")
     private List<Autor> autores;
-    //@ElementCollection
-    //@JsonProperty("languages")
     private List<String> idiomas;
-    //@JsonProperty("download_count")
     private Integer cantidadBajadas;
 
     public Libro() {

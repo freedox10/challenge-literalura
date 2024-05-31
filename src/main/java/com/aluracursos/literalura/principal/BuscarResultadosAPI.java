@@ -101,15 +101,15 @@ public class BuscarResultadosAPI {
                         System.out.println(msg2);
                         System.out.println();
 
-                        if (resultado.getAnterior() != null) {
-                            System.out.println(" 1 - Ver 32 libros menos");
-                        }
-                        if (resultado.getProximo() != null) {
-                            System.out.println(" 2 - Ver 32 libros mas");
-                        }
-                        System.out.println(" 3 - Listar de nuevo estos " + librosPorPagina + " libros");
-                        System.out.println(" 4 - Registrar PRIMER LIBRO de la lista, ó -->");
+                        System.out.println(" 1 - Registrar PRIMER LIBRO de la lista, ó -->");
                         System.out.println(" --> Escribe el >IdGut: del libro a registrar");
+                        System.out.println(" 2 - Listar de nuevo estos " + librosPorPagina + " libros");
+                        if (resultado.getProximo() != null) {
+                            System.out.println(" 3 - Ver 32 libros mas");
+                        }
+                        if (resultado.getAnterior() != null) {
+                            System.out.println(" 4 - Ver 32 libros menos");
+                        }
                         System.out.println(" 0 - Volver al menu principal");
                         System.out.println("----------------------------------------------->>");
                         System.out.println(msg);
@@ -120,24 +120,15 @@ public class BuscarResultadosAPI {
 
                             switch (opcion3) {
                                 case 1:
-                                    if (resultado.getAnterior() != null){
-                                        System.out.println("_= listando 32 libros menos =_");
-                                        //System.out.println("urlAnt case 3: " + resultado.getAnterior());
-                                        String urlAnt = resultado.getAnterior();
-
-                                        resultado = getResultados(urlAnt).getInicial();
-                                        libros = getResultados(urlAnt).getPaginado();
-
-                                        imprimeLibros(libros);
-                                        pagina--;
-                                        msg2 = "  > " + nroLibros + " Libros encontrados < " + librosPorPagina + " mostrados > página " + pagina + " <";
-                                        msg = "> Ingrese una opción <";
-                                    } else {
-                                        msg2 = "  > " + nroLibros + " Libros encontrados < ";
-                                        msg = "> Ingrese una opción <";
-                                    }
+                                    libroSeleccionado = libros.get(0);
+                                    opcion3 = 0;
                                     break;
                                 case 2:
+                                    imprimeLibros(libros);
+                                    msg = "> Ingrese una opción <";
+                                    msg2 = "  > " + nroLibros + " Libros encontrados < " + librosPorPagina + " mostrados > página " + pagina + " <";
+                                    break;
+                                case 3:
                                     if (resultado.getProximo() != null){
                                         System.out.println("_= listando 32 libros mas =_");
                                         //System.out.println("urlProx case 3: " + resultado.getProximo());
@@ -155,14 +146,23 @@ public class BuscarResultadosAPI {
                                         msg = "> Ingrese una opción <";
                                     }
                                     break;
-                                case 3:
-                                    imprimeLibros(libros);
-                                    msg = "> Ingrese una opción <";
-                                    msg2 = "  > " + nroLibros + " Libros encontrados < " + librosPorPagina + " mostrados > página " + pagina + " <";
-                                    break;
                                 case 4:
-                                    libroSeleccionado = libros.get(0);
-                                    opcion3 = 0;
+                                    if (resultado.getAnterior() != null){
+                                        System.out.println("_= listando 32 libros menos =_");
+                                        //System.out.println("urlAnt case 3: " + resultado.getAnterior());
+                                        String urlAnt = resultado.getAnterior();
+
+                                        resultado = getResultados(urlAnt).getInicial();
+                                        libros = getResultados(urlAnt).getPaginado();
+
+                                        imprimeLibros(libros);
+                                        pagina--;
+                                        msg2 = "  > " + nroLibros + " Libros encontrados < " + librosPorPagina + " mostrados > página " + pagina + " <";
+                                        msg = "> Ingrese una opción <";
+                                    } else {
+                                        msg2 = "  > " + nroLibros + " Libros encontrados < ";
+                                        msg = "> Ingrese una opción <";
+                                    }
                                     break;
                                 case 0:
                                     break;

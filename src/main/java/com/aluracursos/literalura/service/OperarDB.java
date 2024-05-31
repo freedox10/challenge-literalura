@@ -57,64 +57,81 @@ public class OperarDB {
 
     public void mostrarLibrosDB() {
         var libros = repoLibro.findAll();
-        libros.stream()
-                .sorted(Comparator.comparing(Libro::getTitulo))
-                .forEach(System.out::println);
+        System.out.println();
+        System.out.println("------------  Libros Registrados  -------------<<");
+        if (!libros.isEmpty()){
+            libros.stream()
+                    .sorted(Comparator.comparing(Libro::getTitulo))
+                    .forEach(System.out::println);
+        } else {
+            System.out.println("       >  Aún no registró Libros  <");
+        }
+        System.out.println("-----------------------------------------------<<");
+        System.out.println();
     }
 
     public void mostrarAutoresDB(){
-        var autores = repoAutor.findAll();
-        System.out.println();
+        //var autores3 = repoAutor.findAll();
+        var autores = repoAutor.buscarAutor2();
 
-        List<String> listaSinDuplicados = autores.stream()
-                .map(Autor::getNombre)
-                .distinct().toList();
-        listaSinDuplicados.stream()
-                .sorted(Comparator.comparing(String::toString))
-                .forEach(System.out::println);
-
-//        autores.stream()
-//                .sorted(Comparator.comparing(Autor::getNombre))
+//        List<String> listaSinDuplicados = autores3.stream()
+//                .map(Autor::getNombre)
+//                .distinct().toList();
+//        listaSinDuplicados.stream()
+//                .sorted(Comparator.comparing(String::toString))
 //                .forEach(System.out::println);
-        //autores.forEach(System.out::println);
-        System.out.println("<<---------------------------------------------<<");
+
+        System.out.println();
+        System.out.println("------------  Autores Registrados  ------------<<");
+        if (!autores.isEmpty()){
+        autores.stream()
+                .sorted(Comparator.comparing(Autor::getNombre))
+                .distinct()
+                .forEach(System.out::println);
+        }else {
+            System.out.println("       >  Aún no registró Libros  <");
+        }
+        System.out.println("-----------------------------------------------<<");
         System.out.println();
     }
 
     public void mostrarAutoresVivosDB(int anio) {
         List<Autor> autores = repoAutor.encontrarAutoresVivos(anio);
         System.out.println();
-        autores.forEach(System.out::println);
-        System.out.println("<<---------------------------------------------<<");
+        System.out.println("---------------  Autores Vivos  ---------------<<");
+        if (!autores.isEmpty()){
+            autores.forEach(System.out::println);
+        } else {
+            System.out.println("      >  No encontrados en el año "+ anio+"  <");
+        }
+        System.out.println("-----------------------------------------------<<");
         System.out.println();
     }
 
     public void mostrarLibrosPorIdioma(String idiomaBuscado) {
         var libros = repoLibro.findAllByIdiomasContaining(idiomaBuscado);
         //System.out.println("librosO: "+libros);
+        System.out.println();
+        System.out.println("-----------  Libros por Idioma "+idiomaBuscado+"  -----------<<");
         if (!libros.isEmpty()){
-            System.out.println();
             libros.forEach(System.out::println);
-            System.out.println("<<---------------------------------------------<<");
-            System.out.println();
         } else {
-            var msgIdioma = """
-                              >  Libro por Idioma, no encontrado  <
-                        >>---------------------------------------------<<""";
-            System.out.println(msgIdioma);
+            System.out.println("        >  Libro no encontrado  <");
         }
+        System.out.println("-----------------------------------------------<<");
+        System.out.println();
     }
 
     public void mostrarTop10Libros(){
         var libros = repoLibro.buscarTop10Libros();
-        System.out.println("libros: "+libros);
+        //System.out.println("libros: "+libros);
         System.out.println();
         System.out.println("      >>  Top 10  <<");
         for (int i = 0; i < libros.size(); i++) {
             System.out.println((i+1)+"- "+libros.get(i).getCantidadBajadas()+" - "+libros.get(i).getTitulo());
         }
         //libros.forEach(System.out::println);
-        System.out.println("<<---------------------------------------------<<");
+        System.out.println("-----------------------------------------------<<");
         System.out.println();
     }
 
@@ -127,11 +144,11 @@ public class OperarDB {
                 .collect(Collectors.summarizingDouble(Libro::getCantidadBajadas));
 
         System.out.println("        >>  Descarga de Libros  <<" +
-                        "\nMedia: " + String.format("%1.2f", datos.getAverage()) +
-                        "\nMayor: " + datos.getMax() +
-                        "\nMenor: " + datos.getMin() +
+                        "\nMedia: " + String.format("%.2f", datos.getAverage()) +
+                        "\nMayor: " + String.format("%.0f", datos.getMax()) +
+                        "\nMenor: " + String.format("%.0f",datos.getMin()) +
                         "\nTotal: " + datos.getCount() + " libros registrados." +
-                        "\n>>---------------------------------------------<<");
+                        "\n-----------------------------------------------<<");
 
 //        //Using Collectors.summarizingInt()
 //        IntSummaryStatistics intSummaryStatistics = employeeList
