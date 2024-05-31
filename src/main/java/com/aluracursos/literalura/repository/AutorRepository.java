@@ -19,4 +19,7 @@ public interface AutorRepository extends JpaRepository<Autor, Long> {
     @Query("SELECT a FROM Autor a WHERE a.anioMuerte >= :anio AND a.anioNacimiento <= :anio")
     List<Autor> encontrarAutoresVivos(int anio);
 
+//    @Query("SELECT DISTINCTROW nombre,anioNacimiento,anioMuerte FROM Autor")
+//    List<Autor> buscarAutor3();
+
 }

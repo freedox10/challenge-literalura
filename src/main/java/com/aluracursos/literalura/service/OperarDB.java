@@ -73,6 +73,8 @@ public class OperarDB {
     public void mostrarAutoresDB(){
         //var autores3 = repoAutor.findAll();
         var autores = repoAutor.buscarAutor2();
+//        var autores3 = repoAutor.buscarAutor3();
+//        System.out.println(autores3);
 
 //        List<String> listaSinDuplicados = autores3.stream()
 //                .map(Autor::getNombre)
