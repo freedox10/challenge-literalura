@@ -7,13 +7,8 @@ import com.aluracursos.literalura.repository.LibroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.DoubleSummaryStatistics;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.*;
 
 @Service
 public class OperarDB {
@@ -58,7 +53,7 @@ public class OperarDB {
     public void mostrarLibrosDB() {
         var libros = repoLibro.findAll();
         System.out.println();
-        System.out.println("------------  Libros Registrados  -------------<<");
+        System.out.println("-----------  Libros Registrados "+libros.size()+" -------------<<");
         if (!libros.isEmpty()){
             libros.stream()
                     .sorted(Comparator.comparing(Libro::getTitulo))
@@ -71,17 +66,7 @@ public class OperarDB {
     }
 
     public void mostrarAutoresDB(){
-        //var autores3 = repoAutor.findAll();
-        var autores = repoAutor.buscarAutor2();
-//        var autores3 = repoAutor.buscarAutor3();
-//        System.out.println(autores3);
-
-//        List<String> listaSinDuplicados = autores3.stream()
-//                .map(Autor::getNombre)
-//                .distinct().toList();
-//        listaSinDuplicados.stream()
-//                .sorted(Comparator.comparing(String::toString))
-//                .forEach(System.out::println);
+        var autores = repoAutor.findAll();
 
         System.out.println();
         System.out.println("------------  Autores Registrados  ------------<<");
@@ -101,6 +86,7 @@ public class OperarDB {
         List<Autor> autores = repoAutor.encontrarAutoresVivos(anio);
         System.out.println();
         System.out.println("---------------  Autores Vivos  ---------------<<");
+        System.out.println("                 - en "+anio+" -");
         if (!autores.isEmpty()){
             autores.forEach(System.out::println);
         } else {

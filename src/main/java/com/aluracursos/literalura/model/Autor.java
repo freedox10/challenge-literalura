@@ -3,6 +3,8 @@ package com.aluracursos.literalura.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "autores")
 public class Autor {
@@ -71,5 +73,18 @@ public class Autor {
     @Override
     public String toString() {
         return "Autor: " + nombre + ", " + anioNacimiento + " - " + anioMuerte + ".";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Autor autor = (Autor) o;
+        return Objects.equals(nombre, autor.nombre) && Objects.equals(anioNacimiento, autor.anioNacimiento) && Objects.equals(anioMuerte, autor.anioMuerte);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nombre, anioNacimiento, anioMuerte);
     }
 }

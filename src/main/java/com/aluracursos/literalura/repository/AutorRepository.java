@@ -10,16 +10,10 @@ import java.util.List;
 @Repository
 public interface AutorRepository extends JpaRepository<Autor, Long> {
 
-    @Query("SELECT DISTINCT a FROM Autor a")
-    List<Autor> buscarAutor2();
-
-    @Query("SELECT a FROM Autor a WHERE a.nombre LIKE :nombreB% AND a.anioNacimiento = :anioNacimientoB AND a.anioMuerte = :anioMuerteB")
-    Autor buscarAutor(String nombreB, Integer anioNacimientoB, Integer anioMuerteB);
+    @Query("SELECT a FROM Autor a")
+    List<Autor> buscarAutor();
 
     @Query("SELECT a FROM Autor a WHERE a.anioMuerte >= :anio AND a.anioNacimiento <= :anio")
     List<Autor> encontrarAutoresVivos(int anio);
-
-//    @Query("SELECT DISTINCTROW nombre,anioNacimiento,anioMuerte FROM Autor")
-//    List<Autor> buscarAutor3();
 
 }

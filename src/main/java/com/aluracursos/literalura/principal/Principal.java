@@ -134,7 +134,7 @@ public class Principal {
 
     private void listarLibroPorIdioma() {
         System.out.println("Ingresa el idioma de los libros que desea listar");
-        System.out.println("es - Español     en - Inglés\nfr - Francés     pt - Portugués\nde - Alemán     fi - Finlandes");
+        System.out.println("es - Español     en - Inglés\nfr - Francés     pt - Portugués\nde - Alemán      fi - Finlandes");
         var loop = "";
         while(loop!="salir"){
             String lenguaje = teclado.nextLine().toLowerCase();
