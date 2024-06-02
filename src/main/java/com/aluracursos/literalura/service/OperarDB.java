@@ -69,7 +69,7 @@ public class OperarDB {
         var autores = repoAutor.findAll();
 
         System.out.println();
-        System.out.println("------------  Autores Registrados  ------------<<");
+        System.out.println("----------  Autores Registrados "+autores.size()+"  ------------<<");
         if (!autores.isEmpty()){
         autores.stream()
                 .sorted(Comparator.comparing(Autor::getNombre))
@@ -100,7 +100,7 @@ public class OperarDB {
         var libros = repoLibro.findAllByIdiomasContaining(idiomaBuscado);
         //System.out.println("librosO: "+libros);
         System.out.println();
-        System.out.println("-----------  Libros por Idioma "+idiomaBuscado+"  -----------<<");
+        System.out.println("-----------  Libros por Idioma "+idiomaBuscado.toUpperCase()+"  -----------<<");
         if (!libros.isEmpty()){
             libros.forEach(System.out::println);
         } else {

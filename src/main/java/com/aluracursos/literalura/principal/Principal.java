@@ -85,14 +85,6 @@ public class Principal {
                         serviciosDB.mostrarEstadisticas();
                         msg = "> Ingrese una opción <";
                         break;
-                    case 8:
-                        break;
-                    case 9:
-                        break;
-                    case 10:
-                        break;
-                    case 11:
-                        break;
                     case 0:
                         var salida = """
                             >>=============================================<<
